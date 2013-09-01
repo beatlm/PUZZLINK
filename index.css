@@ -1,0 +1,279 @@
+@charset "UTF-8";
+/* CSS Document */
+/*-webkit-gradient(tipo , punto inicio, punto final, color inicio, color final, color-stop(porcentaje, color), color-stop(porcentaje, color) ). 
+
+background: -moz-linear-gradient(left top, left bottom, from(#00abeb), to(#fff)*/
+p {
+	font-family: Arial, Verdana, Geneva, sans-serif;
+}
+div.popup{
+background-color: white;
+    border: medium double;
+    height: 150px;
+    left: 30%;
+    position: absolute;
+    top: 35%;
+    width: 440px;	
+	opacity: 1;
+	   z-index: 2;
+	   border-color: rgb(243, 130, 50);
+	border-style: solid;
+	border-width: 3px 3px 3px 3px;
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+}
+div.menu {
+	/*background-image:-moz-linear-gradient(bottom, rgb(255,244,140) 37%, rgb(255,255,255) 85%);*/
+	position: relative;
+	 
+	width: 480px;
+	float: left;
+	height: 100%;
+	background: #fff48c; /* Old browsers */
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff48c),
+		color-stop(100%, #fcfcfc) ); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #fff48c 0%, #fcfcfc 100%);
+	/* W3C */
+	filter: progid :       DXImageTransform.Microsoft.gradient (      
+		  startColorstr =   
+		   '#fff48c', endColorstr =       '#fcfcfc', GradientType =       0 );
+	/* IE6-9 */
+	 /* opacity: 0.6;*/
+}
+div.buscar{
+display: block;
+    height: auto;
+    left: 621.5px;
+    outline: 0 none;
+    overflow: hidden;
+    position: absolute;
+    top: 285px;
+    width: 662px;
+    z-index: 1004;	
+}
+div.fondo{
+	background: url("img/POPIN_FOND.png") repeat scroll 50% 50% #AAAAAA;
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+	
+	 height: 1165px;
+    width: 1905px;
+    z-index: 1;
+	  margin: 0;
+    padding: 0;
+
+}
+
+div.center {
+	 
+	margin-left: 480px;
+
+}
+
+#botonera {
+	margin-top: 50px;
+}
+
+/*button.btn {
+	width: 160px;
+	height: 35px;
+	color: black;
+	font-size: 13pt;
+	font-family: "Comic Sans MS", bold;
+	border-color: rgb(243, 130, 50);
+	border-style: solid;
+	border-width: 3px 3px 3px 3px;
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+}*/
+
+button.menu {
+	background-color: transparent;
+	float: center;
+	width: 320px;
+	margin-left: 60px;
+	margin-top: -3px;
+	height: 50px;
+	color: black;
+	font-size: 22pt;
+	font-family: "Comic Sans MS", bold;
+	border-color: rgb(243, 130, 50);
+	border-style: solid;
+	border-width: 3px 0 3px 0;
+}
+
+button.btn {
+	background-color: transparent;
+	float: center;
+	width: 420px;
+	margin-left: 60px;
+	margin-top: -3px;
+	height: 50px;
+	color: black;
+	font-size: 16pt;
+	font-family: "Comic Sans MS", bold;
+	border-color: rgb(243, 130, 50);
+	border-style: solid;
+	border-width: 3px 0 3px 0;
+}
+
+#searcher{
+	width:100%;
+	margin:40px 0px;
+	padding:10px;
+	background: #fff48c; /* Old browsers */
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff48c),
+		color-stop(100%, #fcfcfc) ); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #fff48c 0%, #fcfcfc 100%);
+	/* W3C */
+	filter: progid :       DXImageTransform.Microsoft.gradient (      
+		  startColorstr =   
+		   '#fff48c', endColorstr =       '#fcfcfc', GradientType =       0 );
+	/* IE6-9 */
+	
+}
+p.cabecera {
+	font-family: Arial, Verdana, Geneva, sans-serif;
+	font-size: large;
+	padding: 50px 20px;;
+}
+
+p.firma {
+	font-family: Arial, Verdana, Geneva, sans-serif;
+	font-size: large;
+	text-align: right;
+	margin-right: 30px !important;
+}
+
+p.texto {
+	font-family: Arial, Verdana, Geneva, sans-serif;
+	font-size: large;
+	padding: 50px 20px;;
+	max-width: 50%;
+}
+
+#footer {
+	position: relative;
+	bottom: 10%;
+}
+
+.holder {
+	width: auto;
+	display: flex;
+	position: relative;
+	top: -200px;
+}
+
+.holder img {
+	max-width: 240px;
+	width: 100%; /*  Will shrink image to 30% of its original width */
+	height: auto;
+	float: right;
+}
+
+img.muneco {
+	position: absolute;
+	right: 5px;
+	top: 300px;
+	max-width: 200px;
+	height: auto;
+}
+
+.idPieza {
+	font-weight: bold;
+	border-bottom: 5px double red;
+	width: 100%;
+}
+
+.contentPieza {
+	width: 100%;
+}
+
+.pieza {
+	border: 1px solid blue;
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	padding: 5px 15px 5px 15px;
+}
+
+#buscador {
+	padding: 180px 20px 50px 20px;
+}
+
+
+
+.txtBuscar {
+	margin:20px 0 15px 40px;
+	padding-left:5px;
+	width: 350px;
+	border: none;
+	background-color: light-grey;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	font-size: 12pt;
+	font-family: "Comic Sans MS", bold;
+	height:30px;
+}
+
+	.btnBuscar{
+	width:26px;
+	border:none;
+		height: 26px;
+	
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+			background-image:url(img/magnifyingglass.png);
+
+}
+#intro{
+	padding: 50px 60px 50px 60px;
+}
+div.introTxt{
+	padding: 30px 20px 30px 20px;
+		border: 1px solid black;
+		margin: 0px 30px 0px 30px;	
+		
+	 	font-family: Arial, Verdana, Geneva, sans-serif;
+}
+	
+#pieza{
+	
+	
+	padding:5px 5px 5px 5px;
+}
+#btnLeft{
+float:left;
+background-image:url(img/left.png);	
+width:22px;
+height:43px;
+	
+}
+#btnRight{
+float:right;
+background-image:url(img/right.png);	
+width:22px;
+height:43px;
+	
+}
