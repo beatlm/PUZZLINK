@@ -11,7 +11,7 @@ $con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
         // selecting database
         mysql_select_db(DB_DATABASE);
         
-$result=mysql_query("SELECT max( id )+1 as id FROM piezas");
+$result=mysql_query("SELECT max( id ) as id FROM piezas");
 // $result = mysql_query("INSERT INTO usuarios(username,passw,email) VALUES('$user', '$passw','$email')");
 
 	/*como el usuario debe ser unico cuenta el numero de ocurrencias con esos datos*/

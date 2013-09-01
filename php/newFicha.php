@@ -5,7 +5,7 @@ define("DB_PASSWORD", "puzzBA13");//Modificar por el password elegido
 define("DB_DATABASE", "u185194903_puzzlink");//Nombre de la base de datos reemplazar si se utilizo otro diferente al mencionado en el tutorial.
  
 
-$nombre =$_POST['nombre'];
+
 $texto =$_POST['texto'];
  
 $con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
@@ -13,7 +13,7 @@ $con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
         mysql_select_db(DB_DATABASE);
         
         
- $result = mysql_query("INSERT INTO piezas(nombre,texto) VALUES('$nombre','$texto')");
+ $result = mysql_query("INSERT INTO piezas(texto) VALUES('$texto')");
 
 	/*como el usuario debe ser unico cuenta el numero de ocurrencias con esos datos*/
 

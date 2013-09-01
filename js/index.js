@@ -5,6 +5,8 @@ $(document).ready(function(){
 	  $("#newPieza").hide();
 	  	$("#fondo").hide();
 		$("#buscar").hide();
+		$("#menu0").css("background-color","lightgray");
+				$("#popupAlta").hide();
 });
 
 function mostrar(id){
@@ -28,9 +30,10 @@ function mostrar(id){
 	case(1):
 		$("#cPiezas").show();
 		$("#menu1").css("background-color","lightgray");
+		srchPcs(2172);//Buscamos la pieza de ejemplo
 	break;
 	case (2):
-		$("#contenidoF").show("slow");
+		$("#contenidoF").show();
 		$("#menu2").css("background-color","lightgray");
 	break;
 	case(3):
@@ -51,7 +54,8 @@ function mostrar(id){
 	break;
 	}
 }
- function srchNext(next){
+
+function srchNext(next){
 	 var posicion=document.getElementById("contentPieza").innerHTML.indexOf("-",0);
 	// alert("posicion:"+posicion);
 	var final=document.getElementById("contentPieza").innerHTML.substring(0,posicion);
@@ -64,16 +68,14 @@ function mostrar(id){
 	srchPcs(final);
  }
 
-function showPopup(){
-		$("#fondo").show();
-		$("#buscar").show();
-}
-	function srchPcs(num){	
+
+
+
+function srchPcs(num){	
 	
 	if(!num){
 	 num=document.getElementById("buscarID").value;
 	}
- 
 	
 	//Lanzamos la consulta
 	$.ajax({
@@ -84,14 +86,11 @@ function showPopup(){
 						        });
 								$("#fondo").hide();
 		$("#buscar").hide();
-								
-								
-								
+															
 }
 
 function srchPcsTxt(){
 	var id=document.getElementById("buscarTexto").value;
-	 
 	
 	//Lanzamos la consulta
 	$.ajax({
@@ -114,49 +113,85 @@ function okPiezas(restrs){
       }
 
       else{
-         
-		 document.getElementById("contentPieza").innerHTML=result[0].id+"- "+result[0].texto;
-		//  document.getElementById("idPieza").innerHTML=result[0].id;
-		  
-	$("#detallePieza").show();
+         	  
+	//$("#detallePieza").show();
+	$("#contentPieza").show();
+	$("#btnLeft").show();
+	$("#btnRight").show();
 	  $("#newPieza").hide();
-		
+		 document.getElementById("contentPieza").innerHTML=result[0].id+"- "+result[0].texto;
+	
 	  }
 }
-function getId(r){
-	alert("obtenemos id" +r[0].id);
-	return r[0].id;
+
+
+function okNewPieza(){
+
+		$.ajax({           
+	                url:'php/getId.php', 
+					type:"POST",
+					success:getId,
+						        });
+								
+	
 }
+
+
+function getId(r){
+	var result = JSON.parse(r);
+	 
+	srchPcs(result[0].id);
+	
+	showPopupId(result[0].id);
+ 
+}
+
 function newPieza(){
-		  $("#contentPieza").hide();
-	  $("#newPieza").show();
-	   $("#btnLeft").hide();
-	    $("#btnRight").hide();
-	  
+	$("#contentPieza").hide();
+	$("#newPieza").show();
+	$("#btnLeft").hide();
+	$("#btnRight").hide();
 	 
 }
 
 function uploadPieza(){
 	//var id=document.getElementById("buscarTexto").value;
 	var texto=document.getElementById("textoPieza").value;
-	var id="";
-		$.ajax({
-	                
-	                url:   'php/getId.php', 
-					type:"POST",
-					success:id=getId,
-						        });
+	 
+		
 		//Lanzamos la consulta
 	$.ajax({
-	                data:{"texto":texto,"id":id},
+	                data:{"texto":texto},
 	                url:   'php/newFicha.php', 
 					type:"POST",
-					success:okPiezas,
+					error:errorAlta,
+					success:okNewPieza,
 						        });
-								
-	$("#newPieza").show();
-	$("#detallePieza").hide();
 	
-	//Lanzar llamada a BBDD para determinar el id y establecerlo en la pantalla
-	document.getElementById("idPiezaNew").innerHTML=2013;
+}
+function showPopup(num){
+		$("#fondo").show();
+		$("#buscar").show();
+		if(num){
+		$("#buscarID").show();
+		$("#buscarTerm").hide();}
+		else{
+		$("#buscarID").hide();
+		$("#buscarTerm").show();}
+}
+function closePopup(){
+	$("#fondo").hide();
+		$("#buscar").hide();
+				$("#popupAlta").hide();
+	
+}
+
+function showPopupId(id){
+		$("#fondo").show();
+		$("#popupAlta").show();
+			 document.getElementById("txtAlta").innerHTML="Enhorabuena, se ha dado de alta su pieza "+id;
+		
+}
+function errorAlta(){
+alert("no se ha podido dar de alta la pieza");	
 }

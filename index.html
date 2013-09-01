@@ -13,17 +13,28 @@
 </head>
 
 <body >
-<div id="fondo" class="fondo">
+
+ <!-- FONDO GRIS PARA IMPEDIR ACCESO -->
+<div id="fondo" class="fondo" onclick="closePopup();">
 </div>
+
+ <!-- POPUP DE BÚSQUEDA-->
 <div id="buscar" class="popup">
+<button id="cerrar" onclick="closePopup();"></button>
+<input id="buscarID" class="txtBuscar" type="number" maxlength="4" name="buscarID" value="Introduce el n&uacute;mero..." onclick="this.value=''"></input>
+<input id="buscarTerm" class="txtBuscar" type="text" name="buscarID" value="Introduce el t&eacute;rmino..." onclick="this.value=''"></input>
+<button id="menuSearch" class="menu" onclick="srchPcs();">Buscar</button>
 
-<input id="buscarID" class="txtBuscar" type="text" name="buscarID" value="Introduce el n&uacute;mero..."
-					onclick="this.value=''"></input>
-	<button id="menu0" class="menu" onclick="srchPcs();">Buscar</button>
+</div>
+<!-- POPUP ALTA OK-->
+<div id="popupAlta" class="popup">
+ 
+<p id="txtAlta" class="texto"></p>
+<button id="menuSearch" class="menu" onclick="closePopup();">Aceptar</button>
+
 </div>
 
-
-
+ <!-- MENU -->
 
 	<div id="menu" width="480" class="menu">
 
@@ -33,22 +44,23 @@
 		<div id="botonera">
 			<button id="menu0" class="menu" onclick="mostrar(0);">Inicio</button>
 			<button id="menu1" class="menu" onclick="mostrar(1);">Piezas</button>
-			<button id="menu2" class="menu">Puzzlinkers</button>
+			<button id="menu2" class="menu" onclick="mostrar(2);">Puzzlinkers</button>
 			<button id="menu3" class="menu">Puzzles obtenidos</button>
 			<button id="menu4" class="menu">Blog</button>
 			<button id="menu5" class="menu">Grupos</button>
 		</div>
+       <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
 	</div>
 	<div id="center" class="center">
 
 		<div id="cMain">
-			<p class="cabecera">Es habitual que las razones que explican la
-				realidad se hallen dispersas, como las piezas de un puzzle. Una
-				realidad laberíntica de cuyo trazado no solemos ser conscientes
-				porque nunca nos han facilitado el mapa. PuzzLink propone reunir
-				esas piezas para reconstruir ese mapa, descubrir su forma y
-				dimensiones y hallar en él las respuestas adecuadas a los
-				innumerables enigmas del mundo.</p>
+			<p class="cabecera">Esta página propone un juego en el que puede participar un solo jugador o millones de jugadores, en solitario
+            o de manera colectiva.
+            El tablero de juego es el cerebro de cada jugador, y las fichas cada una de las piezas numeradas accesibles en su correspondiente link.
+            No hay una meta definida que dictamine el final del Juego, sino un número potencialmente infinito de Metas. Por tanto, la duración de cada 			            partida la determina el propio jugador, sin penalizaciones de ningún tipo pero con una recompensa muy valiosa. Tampoco requiere de un lugar              específico de juego: cualquier espacio y momento puede ser adecuado. Solo se necesita un dispositivo de lectura o un ejemplar impreso del fichero    PuzzLink TM, que se encuentra disponible para descarga al pie de esta página.
+            Llevo más de 20 años jugando con él, aunque hasta 2012 no supe darle forma y nombre. Ahora sé cómo funciona, lo llamo PuzzLink, y me ha proporcionado muchas satisfacciones y placeres mentales. Su nombre nace de la contracción de los términos ingleses, Puzzle y Link, y describe la acción de ensamblar piezzas para reconstruir un puzzle, en contraposición al gerundio inglés puzzling, cuyo significado es confundir.
+            
+            PuzzLink consiste, básicamente, en considerar el contenido de varias piezas y encontrar relaciones inéditas entre los textos contenidos en ellas. El resultado suele ser -si se persevera- el descubrimiento de conceptos, datos y explicaciones muy reveladores.</p>
 
 
 			<p class="firma">Bienvenid@ a PuzzLink</p>
@@ -60,10 +72,10 @@
 					disponibles, ponerte en contacto con otros puzzlinkers e incluso
 					colaborar con tus piezas, puzzles o aportaciones.</p>
 
-				<div class="holder">
+			<!--	<div class="holder">
 					<img src="img/muneco.png" alt="muneco" />
 
-				</div>
+				</div> -->
 			</div>
 		</div>
 
@@ -82,7 +94,7 @@
        
         <div class="introTxt">
          <p id="contentPieza">2014- La resonancia es ¡un fenómeno</p>
-         	<div hidden id="newPieza"  >
+         	<div  id="newPieza"  >
 				 
 				<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="20"> </textarea>
 				<button onclick="uploadPieza()" class="btn">Guardar</button>
@@ -91,40 +103,19 @@
         </div>
         </div>
         
-        <!-- PIEZA NUEVA-->
-        
-        
-            
-            
+        <!-- PIEZA NUEVA-->  
         
         <div id="searcher">
-     <!--    <input id="buscarID" class="txtBuscar" type="text" name="buscarID" value="Introduce el n&uacute;mero..."
-					onclick="this.value=''"></input>
-         <input id="buscarTexto" class="txtBuscar" type="text" name="txtBuscar" value="Introduce el texto..."
-					onclick="this.value=''" ></input>
-        -->
-        <button class="btn" onclick="showPopup();">Buscar piezas por n&uacute;mero</button>
-       
-          <button class="btn" onclick="srchPcsTxt()">Buscar piezas por t&eacute;rminos</button>
-			<button class="btn" onclick="newPieza();">Subir una pieza nueva</button>
-           
-			<button class="btn" onclick="mostrar(1);">Piezas aleatorias</button>
+
+        <button class="btn" onclick="showPopup(true);">Buscar piezas por n&uacute;mero</button>
+        <button class="btn" onclick="showPopup(false);">Buscar piezas por t&eacute;rminos</button>
+		<button class="btn" onclick="newPieza();">Subir una pieza nueva</button>
+        <button class="btn" onclick="mostrar(1);">Piezas aleatorias</button>
         
         </div>
         
 
-	<!--		<div id="buscador">
-				<button onclick="newPieza()" class="btn">Pieza Nueva</button>
-			 
-				<input id="buscarID" class="txtBuscar" type="text" name="buscarID" value="Buscar por ID..."
-					onclick="this.value=''" />
-				<button id="btnBuscar" onclick="srchPcs()" class="btnBuscar"></button>
-               
-                <input id="buscarTexto" class="txtBuscar" type="text" name="txtBuscar" value="Buscar texto..."
-					onclick="this.value=''" />
-				<button id="btnBuscar" onclick="srchPcsTxt()" class="btnBuscar"></button>
-				 
-			</div>
+		<!--
 			<div id="newPieza" class="pieza">
 				<p id="idPiezaNew" class="idPieza"></p>
 				<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="20"> </textarea>
