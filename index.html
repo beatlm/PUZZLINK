@@ -42,12 +42,12 @@
 			alt="Espacio de libre expresion para el librepensamiento" width="479"
 			height="256" />
 		<div id="botonera">
-			<button id="menu0" class="menu" onclick="mostrar(0);">Inicio</button>
-			<button id="menu1" class="menu" onclick="mostrar(1);">Piezas</button>
-			<button id="menu2" class="menu" onclick="mostrar(2);">Puzzlinkers</button>
-			<button id="menu3" class="menu">Puzzles obtenidos</button>
-			<button id="menu4" class="menu">Blog</button>
-			<button id="menu5" class="menu">Grupos</button>
+			<button id="menu0" class="menu" onclick="mostrar(0);" onmouseover="seleccionar(0);" onmouseout="deseleccionar()">Inicio</button>
+			<button id="menu1" class="menu" onclick="mostrar(1);" onmouseover="seleccionar(1);">Piezas</button>
+			<button id="menu2" class="menu" onclick="mostrar(2);" onmouseover="seleccionar(2);">Puzzlinkers</button>
+			<button id="menu3" class="menu" onmouseover="seleccionar(3);">Puzzles obtenidos</button>
+			<button id="menu4" class="menu" onmouseover="seleccionar(4);">Grupos</button>
+		<div id="divfb" onclick="window.open('http://www.facebook.com')"><p id="fb">Síguenos en </p><img id="iconfb" src="img/facebook.png"></div>
 		</div>
        <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
 	</div>

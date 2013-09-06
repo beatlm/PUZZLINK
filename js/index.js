@@ -5,10 +5,12 @@ $(document).ready(function(){
 	  $("#newPieza").hide();
 	  	$("#fondo").hide();
 		$("#buscar").hide();
-		$("#menu0").css("background-color","lightgray");
+		$("#menu0").css("background-color","orange");
 				$("#popupAlta").hide();
 });
 
+
+//Funcion para mostrar la seleccion de in boton onclick
 function mostrar(id){
 	$(".content2").hide();
 	$("#cMain").hide();
@@ -25,33 +27,118 @@ function mostrar(id){
 	switch(id){
 	case(0):
 		$("#cMain").show();
-		$("#menu0").css("background-color","lightgray");
+		$("#menu0").css("background-color","orange");
 	break;
 	case(1):
 		$("#cPiezas").show();
-		$("#menu1").css("background-color","lightgray");
+		$("#menu1").css("background-color","orange");
 		srchPcs(2172);//Buscamos la pieza de ejemplo
 	break;
 	case (2):
 		$("#contenidoF").show();
-		$("#menu2").css("background-color","lightgray");
+		$("#menu2").css("background-color","orange");
 	break;
 	case(3):
 		$("#contenidoA").show("slow");
-		$("#menu3").css("background-color","lightgray");
+		$("#menu3").css("background-color","orange");
 	break;
 	case(4):
 		$("#contenidoH").show("slow");
-		$("#menu4").css("background-color","lightgray");
+		$("#menu4").css("background-color","orange");
 	break;
 	case(5):
 		$("#contenidoH").show("slow");
-		$("#menu5").css("background-color","lightgray");
+		$("#menu5").css("background-color","orange");
 	break;
 	case(6)://Pantalla gris
 		$("#gris").show("slow");
 		//$("#menu5").css("background-color","lightgray");
 	break;
+	}
+}
+
+//Funcion para mostrar la seleccion de in boton onmouseover
+
+function seleccionar(id){
+	//$(".content2").hide();
+	//$("#cMain").hide();
+		 
+	
+	deseleccionar(5);//Deseleccionamos todos
+	 
+	//HACERLO DINAMICO
+	
+	switch(id){
+	case(0):
+	 if($("#menu0").css("background-color")=="transparent"){
+		$("#menu0").css("background-color","#FC9");}
+	break;
+	case(1):
+	 
+	  if($("#menu1").css("background-color") =="transparent"){
+		$("#menu1").css("background-color","#FC9");
+	  }
+	 
+	break;
+	case (2):
+	  if($("#menu2").css("background-color")=="transparent"){
+		$("#menu2").css("background-color","#FC9");
+	  }
+	break;
+	case(3):
+		  if($("#menu3").css("background-color")=="transparent"){
+		$("#menu3").css("background-color","#FC9");
+		  }
+	break;
+	case(4):
+	  if($("#menu4").css("background-color")=="transparent"){
+			$("#menu4").css("background-color","#FC9");}
+	break;
+	case(5):
+	  if($("#menu5").css("background-color")=="transparent"){
+			$("#menu5").css("background-color","#FC9");
+	  }
+	break;
+	}
+	 
+}
+
+function deseleccionar(id){
+	
+	switch(id){
+		case (0):
+
+	 if($("#menu0").css("background-color")=="#FC9"){
+	$("#menu0").css("background-color","transparent");
+	 }
+	 break;
+	 
+	 case(1):
+	  if($("#menu1").css("background-color") =="#FC9"){
+	$("#menu1").css("background-color","transparent");
+	  }
+	  break;
+	  
+	  case(2):
+	   if($("#menu2").css("background-color")=="#FC9"){
+	$("#menu2").css("background-color","transparent");
+	   }
+	   break;
+	   case(3):
+	    if($("#menu3").css("background-color")=="#FC9"){
+	$("#menu3").css("background-color","transparent");
+		} 
+		break;
+		case(4):
+		if($("#menu4").css("background-color")=="#FC9"){
+	$("#menu4").css("background-color","transparent");
+		}
+		case(5):
+		$("#menu0").css("background-color","transparent");
+		$("#menu1").css("background-color","transparent");
+		$("#menu2").css("background-color","transparent");
+		$("#menu3").css("background-color","transparent");
+		$("#menu4").css("background-color","transparent");
 	}
 }
 

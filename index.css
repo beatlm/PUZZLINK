@@ -294,3 +294,30 @@ height:37px;
 margin-bottom:30px;
 float:right;
 }
+ 
+ #iconfb{
+	margin-top:-39px; 
+	float:right;
+ }
+ #divfb{
+	 height: 50px;
+	 	width: 320px;
+		
+		 
+	float: center;
+
+	margin-left: 60px;
+	margin-top: -3px;
+	
+	border-color: rgb(243, 130, 50);
+	border-style: solid;
+	border-width: 3px 0 3px 0;
+	 
+ }
+ #fb{
+	 margin-left: 60px;
+	margin-top: 10px;
+	font-size: 22pt;
+	font-family: "Comic Sans MS", bold;
+	border-color: rgb(243, 130, 50);
+ }
