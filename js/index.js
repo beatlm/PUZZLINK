@@ -5,7 +5,9 @@ $(document).ready(function(){
 	  $("#newPieza").hide();
 	  	$("#fondo").hide();
 		$("#buscar").hide();
-		$("#menu0").css("background-color","orange");
+		//$("#menu0").css("background-color","orange");
+		//Se selecciona el botón inicio
+			$("#menu0").addClass( "selected" );
 				$("#popupAlta").hide();
 });
 
@@ -15,40 +17,39 @@ function mostrar(id){
 	$(".content2").hide();
 	$("#cMain").hide();
 		 
-	
-	$("#menu0").css("background-color","transparent");
-	$("#menu1").css("background-color","transparent");
-	$("#menu2").css("background-color","transparent");
-	$("#menu3").css("background-color","transparent");
-	$("#menu4").css("background-color","transparent");
-	 
+$("#menu0").removeClass( "selected" );
+	$("#menu1").removeClass( "selected" );
+	$("#menu2").removeClass( "selected" );
+	$("#menu3").removeClass( "selected" );
+	$("#menu4").removeClass( "selected" ); 
 	
 	
 	switch(id){
 	case(0):
 		$("#cMain").show();
-		$("#menu0").css("background-color","orange");
+		$("#menu0").addClass( "selected" );
+	 
 	break;
 	case(1):
 		$("#cPiezas").show();
-		$("#menu1").css("background-color","orange");
+	 $("#menu1").addClass( "selected" );
 		srchPcs(2172);//Buscamos la pieza de ejemplo
 	break;
 	case (2):
 		$("#contenidoF").show();
-		$("#menu2").css("background-color","orange");
+		  $("#menu2").addClass( "selected" );
 	break;
 	case(3):
 		$("#contenidoA").show("slow");
-		$("#menu3").css("background-color","orange");
+		  $("#menu3").addClass( "selected" );
 	break;
 	case(4):
 		$("#contenidoH").show("slow");
-		$("#menu4").css("background-color","orange");
+		 $("#menu4").addClass( "selected" ); 
 	break;
 	case(5):
 		$("#contenidoH").show("slow");
-		$("#menu5").css("background-color","orange");
+	 
 	break;
 	case(6)://Pantalla gris
 		$("#gris").show("slow");
@@ -57,90 +58,6 @@ function mostrar(id){
 	}
 }
 
-//Funcion para mostrar la seleccion de in boton onmouseover
-
-function seleccionar(id){
-	//$(".content2").hide();
-	//$("#cMain").hide();
-		 
-	
-	deseleccionar(5);//Deseleccionamos todos
-	 
-	//HACERLO DINAMICO
-	
-	switch(id){
-	case(0):
-	 if($("#menu0").css("background-color")=="transparent"){
-		$("#menu0").css("background-color","#FC9");}
-	break;
-	case(1):
-	 
-	  if($("#menu1").css("background-color") =="transparent"){
-		$("#menu1").css("background-color","#FC9");
-	  }
-	 
-	break;
-	case (2):
-	  if($("#menu2").css("background-color")=="transparent"){
-		$("#menu2").css("background-color","#FC9");
-	  }
-	break;
-	case(3):
-		  if($("#menu3").css("background-color")=="transparent"){
-		$("#menu3").css("background-color","#FC9");
-		  }
-	break;
-	case(4):
-	  if($("#menu4").css("background-color")=="transparent"){
-			$("#menu4").css("background-color","#FC9");}
-	break;
-	case(5):
-	  if($("#menu5").css("background-color")=="transparent"){
-			$("#menu5").css("background-color","#FC9");
-	  }
-	break;
-	}
-	 
-}
-
-function deseleccionar(id){
-	
-	switch(id){
-		case (0):
-
-	 if($("#menu0").css("background-color")=="#FC9"){
-	$("#menu0").css("background-color","transparent");
-	 }
-	 break;
-	 
-	 case(1):
-	  if($("#menu1").css("background-color") =="#FC9"){
-	$("#menu1").css("background-color","transparent");
-	  }
-	  break;
-	  
-	  case(2):
-	   if($("#menu2").css("background-color")=="#FC9"){
-	$("#menu2").css("background-color","transparent");
-	   }
-	   break;
-	   case(3):
-	    if($("#menu3").css("background-color")=="#FC9"){
-	$("#menu3").css("background-color","transparent");
-		} 
-		break;
-		case(4):
-		if($("#menu4").css("background-color")=="#FC9"){
-	$("#menu4").css("background-color","transparent");
-		}
-		case(5):
-		$("#menu0").css("background-color","transparent");
-		$("#menu1").css("background-color","transparent");
-		$("#menu2").css("background-color","transparent");
-		$("#menu3").css("background-color","transparent");
-		$("#menu4").css("background-color","transparent");
-	}
-}
 
 function srchNext(next){
 	 var posicion=document.getElementById("contentPieza").innerHTML.indexOf("-",0);
