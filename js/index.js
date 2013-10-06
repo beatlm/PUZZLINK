@@ -35,7 +35,7 @@ function mostrar(id){
 	case(1):
 		$("#cPiezas").show();
 	 $("#menu1").addClass( "selected" );
-		srchPcs(2172);//Buscamos la pieza de ejemplo
+		srchPcs(1);//Buscamos la primera pieza
 	break;
 	case (2):
 		$("#contenidoF").show();
@@ -70,7 +70,13 @@ function srchNext(next){
 		final=Number(final)+Number(1);
 	}else{
 		final=Number(final)-Number(1);
+		if(final==0){
+			return;//Si es la pieza uno no hacemos nada
+		
+			//final=1;
+		}
 	}
+ 
 	srchPcs(final);
  }
 
@@ -116,10 +122,15 @@ function okPiezas(restrs){
 	var result = JSON.parse(restrs);
 
 	 if (result.length <= 0){
+		  $("#txtIntro").text("No se han encontrado piezas con esos criterios");
+		  //Limpiamos las piezas anteriores
+		 $('#piezas').empty();
+		 $("#pieza").hide();
+		 $("#contentPieza").hide();
 
       }else if(result.length==1){
 		  
-         	  $("#txtIntro").text("Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función 'Buscar' es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.");
+        $("#txtIntro").text("Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función 'Buscar' es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.");
 		$("#variasPiezas").hide();	  
 		$("#pieza").show();
 		$("#contentPieza").show();
@@ -138,7 +149,8 @@ function okPiezas(restrs){
 	  	$("#contentPieza").hide();
 		$("#btnLeft").hide();
 		$("#btnRight").hide();
-		 
+		 //Limpiamos las piezas anteriores
+		 $('#piezas').empty();
 		  for(var i=0;i<result.length;i++){
 		  	var texto="<div  class='introTxt' onclick='srchPcs("+result[i].id+")'> <p >"+result[i].id+"- "+result[i].texto +"</p>";
 	 		$('#piezas').append(texto);
@@ -150,28 +162,26 @@ function okPiezas(restrs){
 
 function okNewPieza(){
 
-		$.ajax({           
+	/*var r=	$.ajax({           
 	                url:'php/getId.php', 
-					type:"POST",
-					success:getId,
-						        });
+					type:"POST", async:false
+					
+						        }).responseText;
 								
-	
-}
-
-
-function getId(r){
-	var result = JSON.parse(r);
-	 
-	srchPcs(result[0].id);
+	var result = JSON.parse(r);*/
+	 	var last=getLastPiece();
+	srchPcs(last);
 	
 	showPopupId(result[0].id);
- 
 }
+
+
+
 
 function newPieza(){
 	$("#contentPieza").hide();
 	$("#newPieza").show();
+		$("#pieza").show();
 	$("#btnLeft").hide();
 	$("#btnRight").hide();
 	 
@@ -220,3 +230,43 @@ function showPopupId(id){
 function errorAlta(){
 alert("no se ha podido dar de alta la pieza");	
 }
+
+
+//Funcion que muestra una pieza aleatoria de entre las existentes
+function aleatoria(){	
+		 
+	/*var r=$.ajax({
+	                data:{},
+	                url:   'php/getId.php', 
+					type:"POST",
+					async:false}).responseText;
+	  
+		var result = JSON.parse(r);*/
+		
+		var last=getLastPiece();
+	 
+		srchPcs(Math.floor((Math.random()*last)+1));
+														
+}
+ 
+ 
+ function getLastPiece(){
+	 
+	
+	var r=	$.ajax({           
+	                url:'php/getId.php', 
+					type:"POST", async:false
+					
+						        }).responseText;
+								
+	var result = JSON.parse(r);
+	 
+	return result[0].id;
+	
+	 
+								
+								
+	 
+ }
+
+ 
