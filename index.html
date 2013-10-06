@@ -80,6 +80,11 @@
 			</div>
 		</div>
 
+
+
+
+
+<!-- CONTENIDO PIEZAS -->
 		<div id="cPiezas" class="content2">
 
 
@@ -128,6 +133,48 @@
 
 	</div>
 
+
+<!-- CONTENIDO PUZZLINKERS -->
+
+<div id="cPuzzlinkers">
+<div id="intro">
+        <p id="txtIntro">LOGATE PARA PODER VER TUS PUZZLES!</p>
+        </div>
+        
+ 
+<label for="login_input_username">Usuario</label>
+<input id="login_input_username" class="login_input" type="text" required="" name="user_name">
+<label for="login_input_password">Contraseña</label>
+<input id="login_input_password" class="login_input" type="password" required="" autocomplete="off" name="user_password">
+<button value="Entrar" name="login" onclick="logar();">Logar</button>
+ 
+<button   onclick="mostrar(5);">Registrarme</button>
+<button   onclick="deslogar();">Salir</button>
+</div>
+
+<div id="cRegistro">
+		<div id="intro">
+        <p id="txtIntro">INTRODUCE TUS DATOS</p>
+        </div>
+
+
+<!-- the user name input field uses a HTML5 pattern check -->
+    <label for="login_input_username">Nombre de usuario (solo letras y números, minimo 6 caracteres)</label>
+    <input id="login_input_username" class="login_input" type="text" pattern="[a-zA-Z0-9]{6,64}" name="user_name" required />
+    
+    <!-- the email input field uses a HTML5 email type check -->
+    <label for="login_input_email">Email</label>    
+    <input id="login_input_email" class="login_input" type="email" name="user_email" required />        
+    
+    <label for="login_input_password_new">Contraseña (min. 6 caracteres)</label>
+    <input id="login_input_password_new" class="login_input" type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" />  
+    
+    <label for="login_input_password_repeat">Repita contraseña</label>
+    <input id="login_input_password_repeat" class="login_input" type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" />        
+    <button onclick="registrar()" name="register" value="Register" >Registrarme</button>
+    
+    
+</div>
 
 
 </body>

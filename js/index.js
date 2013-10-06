@@ -11,6 +11,8 @@ $(document).ready(function(){
 			$("#menu0").addClass( "selected" );
 				$("#popupAlta").hide();
 				 $("#variasPiezas").hide();
+				 $("#cPuzzlinkers").hide();
+				 $("#cRegistro").hide();
 });
 
 
@@ -18,6 +20,7 @@ $(document).ready(function(){
 function mostrar(id){
 	$(".content2").hide();
 	$("#cMain").hide();
+	$("#cPuzzlinkers").hide();
 		 
 	$("#menu0").removeClass( "selected" );
 	$("#menu1").removeClass( "selected" );
@@ -38,7 +41,7 @@ function mostrar(id){
 		srchPcs(1);//Buscamos la primera pieza
 	break;
 	case (2):
-		$("#contenidoF").show();
+		$("#cPuzzlinkers").show();
 		  $("#menu2").addClass( "selected" );
 	break;
 	case(3):
@@ -49,8 +52,8 @@ function mostrar(id){
 		$("#contenidoH").show("slow");
 		 $("#menu4").addClass( "selected" ); 
 	break;
-	case(5):
-		$("#contenidoH").show("slow");
+	case(5): //Pantalle de registro
+		$("#cRegistro").show("slow");
 	 
 	break;
 	case(6)://Pantalla gris
@@ -268,5 +271,63 @@ function aleatoria(){
 								
 	 
  }
-
  
+ function logar(){
+	// alert($("#login_input_username").val());
+	 //alert($("#login_input_password").val());
+	$.ajax({ 
+					data:{"user_name":$("#login_input_username").val(),"user_password":$("#login_input_password").val()},          
+	                url:'Login/index.php', 
+					type:"POST",
+					async:false,	
+					error:kolog,
+					success:oklog, 
+					
+						        });
+							//	alert(r)
+								
+	//var result = JSON.parse(r); 
+	 
+	 
+ }
+function kolog(){
+	alert("Logado ko");
+}
+
+function oklog(result){
+		alert("Logado ok "+result);
+}
+
+function deslogar(){
+		$.ajax({ 
+					         
+	                url:'Login/index.php?logout=true', 
+					type:"POST",
+					async:false,	
+					error:kolog,
+					success:oklog, 
+					
+						        });
+}
+ 
+ 
+ 
+  
+ function registrar(){
+	// alert($("#login_input_username").val());
+	 //alert($("#login_input_password").val());
+	$.ajax({ 
+					data:{"user_name":$("#login_input_username").val(),"user_password":$("#login_input_password").val()},          
+	                url:'Login/register.php', 
+					type:"POST",
+					async:false,	
+					error:kolog,
+					success:oklog, 
+					
+						        });
+							//	alert(r)
+								
+	//var result = JSON.parse(r); 
+	 
+	 
+ }
