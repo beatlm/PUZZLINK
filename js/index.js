@@ -1,5 +1,11 @@
 
+
+
 $(document).ready(function(){ 
+
+ 
+ cargaFb(document);
+
 	$(".content2").hide();
 	$("#detallePieza").hide();
 	  $("#newPieza").hide();
@@ -11,8 +17,11 @@ $(document).ready(function(){
 			$("#menu0").addClass( "selected" );
 				$("#popupAlta").hide();
 				 $("#variasPiezas").hide();
-				 $("#cPuzzlinkers").hide();
+				 $("#cPuzzles").hide();
 				 $("#cRegistro").hide();
+				 
+			$('#popupAlias').hide();
+			
 });
 
 
@@ -20,7 +29,7 @@ $(document).ready(function(){
 function mostrar(id){
 	$(".content2").hide();
 	$("#cMain").hide();
-	$("#cPuzzlinkers").hide();
+	$("#cPuzzles").hide();
 		 
 	$("#menu0").removeClass( "selected" );
 	$("#menu1").removeClass( "selected" );
@@ -41,17 +50,14 @@ function mostrar(id){
 		srchPcs(1);//Buscamos la primera pieza
 	break;
 	case (2):
-	
-		$("#cPuzzlinkers").show();
+		
 		  $("#menu2").addClass( "selected" );
-		  cargaFb(document);
-		//comprobarLogged();
-		//  fbAsyncInit();//comprobamos logueo fb
-		 
+		
 	break;
 	case(3):
-		$("#contenidoA").show("slow");
+		$("#cPuzzles").show();
 		  $("#menu3").addClass( "selected" );
+		  cargaPuzzles( );
 	break;
 	case(4):
 		$("#contenidoH").show("slow");
@@ -170,17 +176,9 @@ function okPiezas(restrs){
 
 function okNewPieza(){
 
-	/*var r=	$.ajax({           
-	                url:'php/getId.php', 
-					type:"POST", async:false
-					
-						        }).responseText;
-								
-	var result = JSON.parse(r);*/
-	 	var last=getLastPiece();
+	var last=getLastPiece();
 	srchPcs(last);
-	
-	showPopupId(result[0].id);
+	showPopupId(last);
 }
 
 
@@ -226,13 +224,14 @@ function closePopup(){
 	$("#fondo").hide();
 		$("#buscar").hide();
 				$("#popupAlta").hide();
+				$("#popupAlias").hide();
 	
 }
 
 function showPopupId(id){
-		$("#fondo").show();
-		$("#popupAlta").show();
-			 document.getElementById("txtAlta").innerHTML="Enhorabuena, se ha dado de alta su pieza "+id;
+	$("#fondo").show();
+	$("#popupAlta").show();
+	document.getElementById("txtAlta").innerHTML="Enhorabuena, se ha dado de alta su pieza con ID: "+id;
 		
 }
 function errorAlta(){
@@ -260,94 +259,31 @@ function aleatoria(){
  
  function getLastPiece(){
 	 
-	
 	var r=	$.ajax({           
 	                url:'php/getId.php', 
-					type:"POST", async:false
-					
+					type:"POST", async:false		
 						        }).responseText;
 								
 	var result = JSON.parse(r);
 	 
 	return result[0].id;
-	
-	 
-								
-								
+									
 	 
  }
- /*
- function logar(){
-	// alert($("#login_input_username").val());
-	 //alert($("#login_input_password").val());
-	$.ajax({ 
-					data:{"user_name":$("#login_input_username").val(),"user_password":$("#login_input_password").val()},          
-	                url:'Login/index.php', 
-					type:"POST",
-					async:false,	
-					error:kolog,
-					success:oklog, 
-					
-						        });
-							//	alert(r)
-								
-	//var result = JSON.parse(r); 
-	 
-	 
- }
-function kolog(){
-	alert("Logado ko");
-}
-
-function oklog(result){
-		alert("Logado ok "+result);
-}
-
-function deslogar(){
-		$.ajax({ 
-					         
-	                url:'Login/index.php?logout=true', 
-					type:"POST",
-					async:false,	
-					error:kolog,
-					success:oklog, 
-					
-						        });
-}
  
- 
- 
-  
- function registrar(){
-	// alert($("#login_input_username").val());
-	 //alert($("#login_input_password").val());
-	$.ajax({ 
-					data:{"user_name":$("#login_input_username").val(),"user_password":$("#login_input_password").val()},          
-	                url:'Login/register.php', 
-					type:"POST",
-					async:false,	
-					error:kolog,
-					success:oklog, 
-					
-						        });
-							//	alert(r)
-								
-	//var result = JSON.parse(r); 
-	 
-	 
- }*/
  
  <!-- FUNCIONES FACEBOOK -->
  function  fbAsyncInit ()  {
-	
+	//alert("fbAsyncInit");
     FB.init({
       appId      : '442776155842772', // App ID
       channelUrl : '//WWW.puzzlink.hol.es/channel.html', // Channel File
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session
       xfbml      : true  // parse XFBML
-    });
-
+    });  
+   
+   
    
    
      // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
@@ -355,13 +291,57 @@ function deslogar(){
   // whenever someone who was previously logged out tries to log in again, the correct case below 
   // will be handled. 
   FB.Event.subscribe('auth.authResponseChange', function(response) {
-	
+	 
+	//alert("response "+response.status);
     // Here we specify what we do with the response anytime this event occurs. 
     if (response.status === 'connected') {
       // The response object is returned with a status field that lets the app know the current
       // login status of the person. In this case, we're handling the situation where they 
       // have logged in to the app.
-      cargaPuzzles(response.authResponse.userID);
+
+	 localStorage.uid = response.authResponse.userID;
+	  
+	  
+	  	FB.api('/me', function(response) {
+  			//alert(response.name);
+			localStorage.name = response.name;
+   			//$("#txtCabLog").text("Usuario: "+response.name);
+		});
+	
+	
+		var r=	$.ajax({data:{"id":localStorage.uid}, 
+	                url:'php/login.php', 
+					type:"POST", async:false
+					
+						        }).responseText;
+								
+		var result = JSON.parse(r);
+							 
+		if(result.length>0){
+			 
+	 		$("#txtCabLog").text("Alias: "+result[0].user_name);
+				 
+		}else{
+			
+			$('#popupAlias').show();
+		}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+   //   console.log('Bienvenid@, ' + response.name + '.'+id);
+	 
+	 
+	 //  $("#txtCabLog").text("Usuario: "+response.name);
+	  	  
+	 
+      
     } else if (response.status === 'not_authorized') {
       // In this case, the person is logged into Facebook, but not into the app, so we call
       // FB.login() to prompt them to do so. 
@@ -370,21 +350,45 @@ function deslogar(){
       // (1) JavaScript created popup windows are blocked by most browsers unless they 
       // result from direct interaction from people using the app (such as a mouse click)
       // (2) it is a bad experience to be continually prompted to login upon page load.
+	  alert("los datos no son correctos, vuelve a intentarlo");
       FB.login();
-	   $("#introLog").text("Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!");
+	  localStorage.uid=false;
+	  mostrar(0);
+	   $("#txtCabLog").text("Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!");
     } else {
       // In this case, the person is not logged into Facebook, so we call the login() 
       // function to prompt them to do so. Note that at this stage there is no indication
       // of whether they are logged into the app. If they aren't then they'll see the Login
       // dialog right after they log in to Facebook. 
       // The same caveats as above apply to the FB.login() call here.
-	   $("#introLog").text("Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!");
+	   $("#txtCabLog").text("Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!");
       FB.login();
+	    mostrar(0);
+	    localStorage.uid=false;
     }
   });
   
 
   };
+  
+function setAlias(alias){
+	var r=	$.ajax({data:{"alias":alias,
+							"id":localStorage.uid}, 
+	                url:'php/alias.php', 
+					type:"POST", async:false
+					
+						        }).responseText;
+								alert(r);
+	if(r!='false'){
+		closePopup();
+		  $("#txtCabLog").text("Alias: "+alias);
+	}else{
+	alert("Lo sentimos, no se ha podido establecer tu alias, vuelve a intentarlo más tarde.");
+	 $("#txtCabLog").text("Nombre: "+localStorage.name);	
+		closePopup();
+	}
+	
+}
 
   // Load the SDK asynchronously
   function cargaFb(d){
@@ -399,17 +403,12 @@ function deslogar(){
    
    // Here we run a very simple test of the Graph API after login is successful. 
   // This testAPI() function is only called in those cases. 
-  function cargaPuzzles(id) {
-    console.log('Bienvenido!  Obteniendo información.... ');
-    FB.api('/me', function(response) {
-      console.log('Bienvenid@, ' + response.name + '.'+id);
-	 
-	 
-	   $("#introLog").text("Aqui estan tus puzzles "+response.name);
-	   
+  function cargaPuzzles() {
+   // console.log('Bienvenido!  Obteniendo información.... ');
+ 
 	   //Cargamos el nombre de los puzzles asociados al usuario
 	   
-	   var r=	$.ajax({    data:{"id":id},      
+	   var r=	$.ajax({    data:{"id":  localStorage.uid},      
 	                url:'php/getPuzzles.php', 
 					type:"POST", async:false
 					
@@ -417,20 +416,21 @@ function deslogar(){
 								
 	var result = JSON.parse(r);
 	 //Limpiamos las puzzles anteriores
-		 $('#piezas').empty();
+		 $('#puzzles').empty();
 	 for(var i=0;i<result.length;i++){
 		console.log( result[i].nombre);
 		
 		 
-		  	var texto="<div  class='introTxt' onclick='srchPzz("+result[i].id+")'> <p >"+result[i].nombre+"</p>";
+		  	var texto="<div  class='puzzleName' onclick='srchPzz("+result[i].id+")'> <p class='puzzleName' >"+result[i].nombre+"</p>";
 	 		$('#puzzles').append(texto);
+			$('#listaPuzzles').show();
 		  
 	 }
 	 
 	   
 	   
 	   
-    });
+  //  });
   }
   
   //Funcion para busqueda de puzzles

@@ -5,14 +5,15 @@ define("DB_PASSWORD", "puzzBA13");//Modificar por el password elegido
 define("DB_DATABASE", "u185194903_puzzlink");//Nombre de la base de datos reemplazar si se utilizo otro diferente al mencionado en el tutorial.
  
 
- 
 
+$id = $_POST['id'];
+ 
 $con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
         // selecting database
         mysql_select_db(DB_DATABASE);
         
-$result=mysql_query("SELECT max( id ) as id FROM piezas");
-
+        
+ $result = mysql_query("SELECT user_name from usuarios WHERE user_id= '$id'");
 
 
 $rows = array();
@@ -20,8 +21,8 @@ while($r = mysql_fetch_assoc($result)) {
     $rows[] = $r;
 }
 echo json_encode($rows);
-
-
-
- 
+        
+        
+        
+    
 ?>

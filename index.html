@@ -21,175 +21,144 @@
 
 
  <!-- FONDO GRIS PARA IMPEDIR ACCESO -->
-<div id="fondo" class="fondo" onclick="closePopup();">
-</div>
+<div id="fondo" class="fondo" onclick="closePopup();"></div>
 
  <!-- POPUP DE BÚSQUEDA-->
 <div id="buscar" class="popup">
-<button id="cerrar" onclick="closePopup();"></button>
-<p id="textoPopup" class="txtPopup">Introduce el número de la pieza</p>
-<input id="buscarID" class="txtBuscar" type="number" maxlength="4" name="buscarID"  onclick="this.value=''"></input>
-<input id="buscarTerm" class="txtBuscar" type="text" name="buscarID" onclick="this.value=''"></input>
-<button id="menuSearch" class="menu" onclick="srchPcs($('#buscarID').val());">Buscar</button>
-
+	<button id="cerrar" onclick="closePopup();"></button>
+	<p id="textoPopup" class="txtPopup">Introduce el número de la pieza</p>
+	<input id="buscarID" class="txtBuscar" type="number" maxlength="4" name="buscarID"  onclick="this.value=''"></input>
+	<input id="buscarTerm" class="txtBuscar" type="text" name="buscarID" onclick="this.value=''"></input>
+	<button id="menuSearch" class="menu" onclick="srchPcs($('#buscarID').val());">Buscar</button>
 </div>
+
 <!-- POPUP ALTA OK-->
 <div id="popupAlta" class="popup">
- 
-<p id="txtAlta" class="texto"></p>
-<button id="menuSearch" class="menu" onclick="closePopup();">Aceptar</button>
-
+	<p id="txtAlta" class="texto"></p>
+	<button id="menuSearch" class="menu" onclick="closePopup();">Aceptar</button>
 </div>
 
+ <!-- POPUP DE ALIAS-->
+<div id="popupAlias" class="popup">
+	<button id="cerrar" onclick="closePopup();"></button>
+	<p class="txtPopup">Introduce tu alias para Puzzlink</p>
+	<input id="aliasInput" class="txtBuscar" type="text" name="buscarID" onclick="this.value=''"></input>
+	<button id="aliasButton" class="menu" onclick="setAlias($('#aliasInput').val());">Aceptar</button>
+</div>
+
+
  <!-- MENU -->
-
-	<div id="menu" width="480" class="menu">
-
-		<img src="img/cabecera.png"
-			alt="Espacio de libre expresion para el librepensamiento" width="479"
-			height="256" />
-		<div id="botonera">
-			<button id="menu0" class="menu" onclick="mostrar(0);"  >Inicio</button>
+<div id="menu" width="480" class="menu">
+	<img src="img/cabecera.png" alt="Espacio de libre expresion para el librepensamiento" width="479" height="256" />
+	<div id="botonera">
+			<button id="menu0" class="menu" onclick="mostrar(0);">Inicio</button>
 			<button id="menu1" class="menu" onclick="mostrar(1);">Piezas</button>
 			<button id="menu2" class="menu" onclick="mostrar(2);" >Puzzlinkers</button>
 			<button id="menu3" class="menu" onclick="mostrar(3);">Puzzles obtenidos</button>
 			<button id="menu4" class="menu" onclick="mostrar(4);">Grupos</button>
-		<div id="divfb" onclick="window.open('http://www.facebook.com')"><p id="fb">Síguenos en </p><img id="iconfb" src="img/facebook.png"></div>
-		</div>
-       <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
+			<div id="divfb" onclick="window.open('http://www.facebook.com')"><p id="fb">Síguenos en </p><img id="iconfb" src="img/facebook.png"></div>
 	</div>
-	<div id="center" class="center">
+    <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
+</div>
 
-		<div id="cMain">
-			<p class="cabecera">Esta página propone un juego en el que puede participar un solo jugador o millones de jugadores, en solitario
+
+
+<!-- DIV CENTRAL -->
+<div id="center" class="center">
+
+<!-- CABECERA LOGIN -->
+
+	<div id="cabeceraLog" class="cabeceraLog">
+        	<p id="txtCabLog">Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!</p>  
+           <div class="loginButton">
+            	<fb:login-button  show-faces="false" size="xlarge" autologoutlink="true" ></fb:login-button>
+
+        	</div> 
+        </div>
+
+
+
+<!--Bienvenida -->
+	<div id="cMain">
+		<p class="cabecera">Esta página propone un juego en el que puede participar un solo jugador o millones de jugadores, en solitario
             o de manera colectiva.
             El tablero de juego es el cerebro de cada jugador, y las fichas cada una de las piezas numeradas accesibles en su correspondiente link.
             No hay una meta definida que dictamine el final del Juego, sino un número potencialmente infinito de Metas. Por tanto, la duración de cada 			            partida la determina el propio jugador, sin penalizaciones de ningún tipo pero con una recompensa muy valiosa. Tampoco requiere de un lugar              específico de juego: cualquier espacio y momento puede ser adecuado. Solo se necesita un dispositivo de lectura o un ejemplar impreso del fichero    PuzzLink TM, que se encuentra disponible para descarga al pie de esta página.
             Llevo más de 20 años jugando con él, aunque hasta 2012 no supe darle forma y nombre. Ahora sé cómo funciona, lo llamo PuzzLink, y me ha proporcionado muchas satisfacciones y placeres mentales. Su nombre nace de la contracción de los términos ingleses, Puzzle y Link, y describe la acción de ensamblar piezzas para reconstruir un puzzle, en contraposición al gerundio inglés puzzling, cuyo significado es confundir.
             
             PuzzLink consiste, básicamente, en considerar el contenido de varias piezas y encontrar relaciones inéditas entre los textos contenidos en ellas. El resultado suele ser -si se persevera- el descubrimiento de conceptos, datos y explicaciones muy reveladores.</p>
-
-
-			<p class="firma">Bienvenid@ a PuzzLink</p>
-
-			<div id="footer">
+		<p class="firma">Bienvenid@ a PuzzLink</p>
+		<div id="footer">
 				<p class="texto">A la izquierda tienes acceso a todos los
 					elementos necesarios para participar en la búsqueda de sentidos.
 					Puedes leer los puzzles ya resueltos, consultar las fichas
 					disponibles, ponerte en contacto con otros puzzlinkers e incluso
 					colaborar con tus piezas, puzzles o aportaciones.</p>
 
-			<!--	<div class="holder">
-					<img src="img/muneco.png" alt="muneco" />
-
-				</div> -->
-			</div>
 		</div>
+        
+        <a href="https://docs.google.com/file/d/0BxDC8Ovy8KxvX3V1Nzh0dEFzUVU/edit?usp=sharing " target="_blank" >Funcionamiento de Puzzlink</a>
+	</div>
 
 
 
 
 
 <!-- CONTENIDO PIEZAS -->
-		<div id="cPiezas" class="content2">
-
-
+	<div id="cPiezas" class="content2">
 		<div id="intro">
         <p id="txtIntro">Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función "Buscar" es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.</p>
         </div>
         
-        
-                <!-- VARIAS PIEZAS -->
+         <!-- VARIAS PIEZAS -->
         <div id="variasPiezas">
         	<!--<p>Existen varias piezas con los criterios seleccionados, por favor haz click sobre la que te interese</p> -->
-        	<div id="piezas"></div>
-        
-        
+        	<div id="piezas"></div> 
         </div>
         
         
          <!-- UNICA PIEZA -->
         
         <div id="pieza">
-        <a id="btnLeft" onclick="srchNext(false)"></a>
-        <a id="btnRight" onclick="srchNext(true)" ></a>
+        	<a id="btnLeft" onclick="srchNext(false)"></a>
+        	<a id="btnRight" onclick="srchNext(true)" ></a>
        
-        <div class="introTxt">
-         <p id="contentPieza"></p>
-         	<div  id="newPieza"  >
-				 
-				<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="20"> </textarea>
-				<button onclick="uploadPieza()" class="btn">Guardar</button>
-			</div>
-            
-        </div>
+        	<div class="introTxt">
+         		<p id="contentPieza"></p>
+         		<div id="newPieza"> 
+					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="20"> </textarea>
+					<button onclick="uploadPieza()" class="btn">Guardar</button>
+				</div>  
+        	</div>
         </div>
         
-        <!-- PIEZA NUEVA-->  
+        <!-- BOTONERA BUSQUEDA-->  
         
         <div id="searcher">
-
-        <button class="btn" onclick="showPopup(true);">Buscar piezas por n&uacute;mero</button>
-        <button class="btn" onclick="showPopup(false);">Buscar piezas por t&eacute;rminos</button>
-		<button class="btn" onclick="newPieza();">Subir una pieza nueva</button>
-        <button class="btn" onclick="aleatoria();">Pieza aleatoria</button>
-        
+        	<button class="btn" onclick="showPopup(true);">Buscar piezas por n&uacute;mero</button>
+        	<button class="btn" onclick="showPopup(false);">Buscar piezas por t&eacute;rminos</button>
+			<button class="btn" onclick="newPieza();">Subir una pieza nueva</button>
+        	<button class="btn" onclick="aleatoria();">Pieza aleatoria</button>
         </div>
-
-
 	</div>
 
 
-<!-- CONTENIDO PUZZLINKERS -->
+	<!-- CONTENIDO PUZZLINKERS -->
 
-<div id="cPuzzlinkers">
- <fb:login-button show-faces="false" size="large" autologoutlink="true"  ></fb:login-button>
-<div id="introLog">
-        <p id="txtIntro">Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!</p>
-        
-       
-        </div>
-        
+	<div id="cPuzzles">
+ 		
+	
+    
          <!-- VARIAS PUZZLESS -->
-        <div id="variasPuzzles">
-        	<!--<p>Existen varias piezas con los criterios seleccionados, por favor haz click sobre la que te interese</p> -->
-        	<div id="puzzles"></div>
-        
-        
- 
-<!--<label for="login_input_username">Usuario</label>
-<input id="login_input_username" class="login_input" type="text" required="" name="user_name">
-<label for="login_input_password">Contraseña</label>
-<input id="login_input_password" class="login_input" type="password" required="" autocomplete="off" name="user_password">
-<button value="Entrar" name="login" onclick="logar();">Logar</button>
- 
-<button   onclick="mostrar(5);">Registrarme</button>
-<button   onclick="deslogar();">Salir</button>
-</div>
--->
-
-
-<!--<div id="cRegistro">
-		<div id="intro">
-        <p id="txtIntro">INTRODUCE TUS DATOS</p>
+        <div id="listaPuzzles">
+        <p>Aquí está la lista de tus puzzles: </p>
+        <div id="puzzles"></div>
+        	
         </div>
+        <button class="btn" onclick="newPuzzle();">Nuevo Puzzle</button>
+     </div>
+        
 
-
-<!-- the user name input field uses a HTML5 pattern check -->
- <!--   <label for="login_input_username">Nombre de usuario (solo letras y números, minimo 6 caracteres)</label>
-    <input id="login_input_username" class="login_input" type="text" pattern="[a-zA-Z0-9]{6,64}" name="user_name" required />
-    
-    <!-- the email input field uses a HTML5 email type check -->
-  <!--  <label for="login_input_email">Email</label>    
-    <input id="login_input_email" class="login_input" type="email" name="user_email" required />        
-    
-    <label for="login_input_password_new">Contraseña (min. 6 caracteres)</label>
-    <input id="login_input_password_new" class="login_input" type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" />  
-    
-    <label for="login_input_password_repeat">Repita contraseña</label>
-    <input id="login_input_password_repeat" class="login_input" type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" />        
-    <button onclick="registrar()" name="register" value="Register" >Registrarme</button>
-  -->  
     
 </div>
 

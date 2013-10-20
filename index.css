@@ -275,7 +275,18 @@ div.introTxt{
 		
 	 	font-family: Arial, Verdana, Geneva, sans-serif;
 }
-	
+div.puzzleName{
+	width:150px;
+		padding: 10px 20px 30px 20px;
+		border: 3px solid orange;
+		margin: 0px 30px 15px 30px;	
+		height:3px;
+	 	font-family: Arial, Verdana, Geneva, sans-serif;
+		background-color:lightgoldenrodyellow;
+}
+	p.puzzleName{
+	text-align:center;	
+	}
 #pieza{
 	
 	
@@ -338,3 +349,43 @@ float:right;
 	font-family: "Comic Sans MS", bold;
 	border-color: rgb(243, 130, 50);
  }
+ div.loginButton{
+	padding-left: 90%;
+	position:relative;
+	top: -30px;
+	
+ }
+ #cPuzzles{
+	
+	 padding:20px 0px 0px 20px;
+	 
+ }
+ div.cabeceraLog{
+	 width:100%;
+	 position:relative;
+	 
+ }
+ #puzzles{
+	margin-top:20px; 
+ }
+ 
+ div.center{
+	 height:100vh;
+	 padding:10px;
+	background: #fff48c; /* Old browsers */
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff48c),
+		color-stop(100%, #fcfcfc) ); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #fff48c 0%, #fcfcfc 100%);
+	/* W3C */
+	filter: progid :       DXImageTransform.Microsoft.gradient (      
+		  startColorstr =   
+		   '#fff48c', endColorstr =       '#fcfcfc', GradientType =       0 );
+	/* IE6-9 */}
