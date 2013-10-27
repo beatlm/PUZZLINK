@@ -54,6 +54,7 @@ function mostrar(id){
 			$("#pieGrupo").hide();
 			$("#piePuzzles").hide();
 			$("#piePiezas").show();
+			 $("#pieNuevoGrupo").hide();
 	 	$("#menu1").addClass( "selected" );
 		srchPcs(1);//Buscamos la primera pieza
 	break;
@@ -67,6 +68,7 @@ function mostrar(id){
 			$("#pie").show();
 		$("#pieGrupo").hide();
 			$("#piePiezas").hide();
+			$("#pieNuevoGrupo").hide();
 			$("#piePuzzles").show();
 		  $("#menu3").addClass( "selected" );
 		  cargaPuzzles( );
@@ -77,6 +79,7 @@ function mostrar(id){
 		$("#pie").show();
 		$("#pieGrupo").show();
 			$("#piePiezas").hide();
+			$("#pieNuevoGrupo").hide();
 			$("#piePuzzles").hide();
 		 $("#menu4").addClass( "selected" ); 
 	break;
@@ -88,10 +91,16 @@ function mostrar(id){
 		$("#gris").show("slow");
 		//$("#menu5").css("background-color","lightgray");
 	break;
-	case(7)://Nuevo puzzle
+	case(7)://Nuevo grupo
 		$("#cNewGrupo").show();
 		$('#cGrupos').hide();
 		 $("#menu4").addClass( "selected" ); 
+		 $("#pieNuevoGrupo").show();
+		 $("#pie").show();
+		$("#pieGrupo").hide();
+			$("#piePiezas").hide();
+		 
+			$("#piePuzzles").hide();
 	
 	break;
 	}
@@ -413,12 +422,9 @@ function setAlias(alias){
 
 function cargaPuzzles() {
 
- alert(localStorage.uid);
- alert(localStorage.uid=="false");
 	if(localStorage.uid=="false"){
-		$("#txtPuzzles").val("Conéctate con tu cuenta de facebook para poder crear y ver tus puzzles,");
-		alert($("#txtPuzzles").html());
-	alert("Modifica txtPuzzles");
+		$("#txtPuzzles").text("Conéctate con tu cuenta de facebook para poder crear y ver tus puzzles.");
+	
 	}else{
 	
 	   
@@ -434,9 +440,9 @@ function cargaPuzzles() {
 		 
 		 
 		 if(result.length==0){
-				$("#txtPuzzles").val("Conéctate con tu cuenta de facebook para poder crear y ver tus puzzles"); 
+				$("#txtPuzzles").text("Conéctate con tu cuenta de facebook para poder crear y ver tus puzzles."); 
 		 }else{
-		 	$("#txtPuzzles").val("Aquí estan tus puzzles:");
+		 	$("#txtPuzzles").text("Aquí estan tus puzzles:");
 		 
 	 		for(var i=0;i<result.length;i++){
 			console.log( result[i].nombre);
@@ -513,7 +519,7 @@ function srchPzz(num){
 	 $('#grupos').empty();
 		  for(var i=0;i<result.length;i++){
 		
-		  	var texto="<div  class='introTxt' onclick='srchGrupo("+result[i].id+")'> <p >"+result[i].nombre+"- "+result[i].descripcion +"</p>";
+		  	var texto="<div  class='bigTxt' onclick='srchGrupo("+result[i].id+")'> <p >"+result[i].nombre+"- "+result[i].descripcion +"</p>";
 	 		$('#grupos').append(texto);
 		  }
  }
@@ -533,11 +539,11 @@ function srchPzz(num){
 					type:"POST",
 				 
 						        }).responseText;
-								
-									r = JSON.parse(r);
-								alert(r[0]);
+							 
+								//	r = JSON.parse(r);
 						 
-								if(r==1){
+						 alert(r);
+								if(r=='1'){
 								alert("tu grupo se ha generado correctamente");	
 								}else{
 									alert("ERROR tu grupo no se ha generado correctamente");	

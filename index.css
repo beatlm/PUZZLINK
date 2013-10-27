@@ -5,6 +5,8 @@
 background: -moz-linear-gradient(left top, left bottom, from(#00abeb), to(#fff)*/
 p {
 	font-family: Arial, Verdana, Geneva, sans-serif;
+	font-size:1.2em;
+	line-height:1.3em;
 }
 div.popup{
 background-color: white;
@@ -146,8 +148,8 @@ button.btn:hover{
  
 p.cabecera {
 	font-family: Arial, Verdana, Geneva, sans-serif;
-	font-size: large;
-	padding: 50px 20px;;
+ 
+	padding: 50px 20px;
 }
 
 p.firma {
@@ -410,7 +412,7 @@ height:71.4vh;
  }	
  
  #txtCabLog{
-font-family:"Comic Sans MS", bold;
+
 font-size:1.5em;
 font-variant:small-caps;
 float:left;
@@ -459,4 +461,32 @@ bottom:0px;
  	
 	font-size:1em;
 		
+	}
+	p.txtPieGrupo{
+	float:left;
+	font-size:1em;
+	max-width: 25vw;
+text-align: center;	
+	}
+	
+	p.txtGrupos{
+	font-size:1em;
+	margin:2vw;	
+	}
+	.bigTxt{
+		font-size:1.1em;	
+		font-weight:bold;
+		padding: 1vw 0 1vw 20vw;
+	}
+	
+	div.formAlta{
+	padding:2vw;
+	font-size:1em;
+	font-family:Verdana, Geneva, sans-serif;
+	font-weight:bold;
+		
+	}
+	#imgPuzzlink{
+	width:25vw; 
+	/*height:"256";	*/
 	}
