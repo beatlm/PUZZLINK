@@ -11,9 +11,7 @@ $(document).ready(function(){
 	  $("#newPieza").hide();
 	  	$("#fondo").hide();
 		$("#buscar").hide();
-		 
-		//$("#menu0").css("background-color","orange");
-		//Se selecciona el botón inicio
+
 			$("#menu0").addClass( "selected" );
 				$("#popupAlta").hide();
 				 $("#variasPiezas").hide();
@@ -21,6 +19,9 @@ $(document).ready(function(){
 				 $("#cRegistro").hide();
 				 
 			$('#popupAlias').hide();
+			$("#cGrupos").hide();
+				$("#cNewGrupo").hide();
+					$("#pie").hide();
 			
 });
 
@@ -30,6 +31,9 @@ function mostrar(id){
 	$(".content2").hide();
 	$("#cMain").hide();
 	$("#cPuzzles").hide();
+		$("#cGrupos").hide();
+				$("#cNewGrupo").hide();
+				$("#pie").hide();
 		 
 	$("#menu0").removeClass( "selected" );
 	$("#menu1").removeClass( "selected" );
@@ -46,7 +50,11 @@ function mostrar(id){
 	break;
 	case(1):
 		$("#cPiezas").show();
-	 $("#menu1").addClass( "selected" );
+			$("#pie").show();
+			$("#pieGrupo").hide();
+			$("#piePuzzles").hide();
+			$("#piePiezas").show();
+	 	$("#menu1").addClass( "selected" );
 		srchPcs(1);//Buscamos la primera pieza
 	break;
 	case (2):
@@ -56,11 +64,20 @@ function mostrar(id){
 	break;
 	case(3):
 		$("#cPuzzles").show();
+			$("#pie").show();
+		$("#pieGrupo").hide();
+			$("#piePiezas").hide();
+			$("#piePuzzles").show();
 		  $("#menu3").addClass( "selected" );
 		  cargaPuzzles( );
 	break;
-	case(4):
-		$("#contenidoH").show("slow");
+	case(4)://Grupos
+		cargarGrupos();
+		$("#cGrupos").show();
+		$("#pie").show();
+		$("#pieGrupo").show();
+			$("#piePiezas").hide();
+			$("#piePuzzles").hide();
 		 $("#menu4").addClass( "selected" ); 
 	break;
 	case(5): //Pantalle de registro
@@ -71,14 +88,23 @@ function mostrar(id){
 		$("#gris").show("slow");
 		//$("#menu5").css("background-color","lightgray");
 	break;
+	case(7)://Nuevo puzzle
+		$("#cNewGrupo").show();
+		$('#cGrupos').hide();
+		 $("#menu4").addClass( "selected" ); 
+	
+	break;
 	}
 }
 
 
+
+//Funcion para buscar la pieza siguiente o anterior. (next=true--ªsiguiente)
 function srchNext(next){
-	 var posicion=document.getElementById("contentPieza").innerHTML.indexOf("-",0);
-	// alert("posicion:"+posicion);
-	var final=document.getElementById("contentPieza").innerHTML.substring(0,posicion);
+	var posicion=$("#contentPieza").html().indexOf("-",0);
+	var final=$("#contentPieza").html().substring(0,posicion);
+	$("#btnLeft").show();
+	$("#btnRight").show();
 	
 	if(next){
 		final=Number(final)+Number(1);
@@ -86,12 +112,16 @@ function srchNext(next){
 		final=Number(final)-Number(1);
 		if(final==0){
 			return;//Si es la pieza uno no hacemos nada
-		
-			//final=1;
 		}
 	}
+	var last= getLastPiece();
  
-	srchPcs(final);
+ 	if(last==final){
+	 	$("#btnRight").hide();
+		
+ 	}
+		srchPcs(final);
+ 	
  }
 
 
@@ -148,12 +178,13 @@ function okPiezas(restrs){
 		$("#variasPiezas").hide();	  
 		$("#pieza").show();
 		$("#contentPieza").show();
-		$("#btnLeft").show();
-		$("#btnRight").show();
+	
 	  	$("#newPieza").hide();
 		$("#contentPieza").text(result[0].id+"- "+result[0].texto);
-		<!--$("#piezas").removeClass("introTxt");-->
-		//Modificar para borrar las piezas cargadas varias, mediante el id que sera identico
+		if(result[0].id==1){
+			$("#btnLeft").hide();
+		}
+		
 	
 	  }else{//Se encuentran varias piezas
 	  
@@ -190,6 +221,7 @@ function newPieza(){
 		$("#pieza").show();
 	$("#btnLeft").hide();
 	$("#btnRight").hide();
+$("#textoPieza").val("Introduce aquí el contenido de tu pieza...");
 	 
 }
 
@@ -241,15 +273,7 @@ alert("no se ha podido dar de alta la pieza");
 
 //Funcion que muestra una pieza aleatoria de entre las existentes
 function aleatoria(){	
-		 
-	/*var r=$.ajax({
-	                data:{},
-	                url:   'php/getId.php', 
-					type:"POST",
-					async:false}).responseText;
-	  
-		var result = JSON.parse(r);*/
-		
+			
 		var last=getLastPiece();
 	 
 		srchPcs(Math.floor((Math.random()*last)+1));
@@ -327,21 +351,7 @@ function aleatoria(){
 		}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-   //   console.log('Bienvenid@, ' + response.name + '.'+id);
-	 
-	 
-	 //  $("#txtCabLog").text("Usuario: "+response.name);
-	  	  
-	 
-      
+	      
     } else if (response.status === 'not_authorized') {
       // In this case, the person is logged into Facebook, but not into the app, so we call
       // FB.login() to prompt them to do so. 
@@ -378,7 +388,7 @@ function setAlias(alias){
 					type:"POST", async:false
 					
 						        }).responseText;
-								alert(r);
+							 
 	if(r!='false'){
 		closePopup();
 		  $("#txtCabLog").text("Alias: "+alias);
@@ -400,13 +410,17 @@ function setAlias(alias){
      ref.parentNode.insertBefore(js, ref);
    };
    
-   
-   // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function cargaPuzzles() {
-   // console.log('Bienvenido!  Obteniendo información.... ');
- 
-	   //Cargamos el nombre de los puzzles asociados al usuario
+
+function cargaPuzzles() {
+
+ alert(localStorage.uid);
+ alert(localStorage.uid=="false");
+	if(localStorage.uid=="false"){
+		$("#txtPuzzles").val("Conéctate con tu cuenta de facebook para poder crear y ver tus puzzles,");
+		alert($("#txtPuzzles").html());
+	alert("Modifica txtPuzzles");
+	}else{
+	
 	   
 	   var r=	$.ajax({    data:{"id":  localStorage.uid},      
 	                url:'php/getPuzzles.php', 
@@ -414,23 +428,31 @@ function setAlias(alias){
 					
 						        }).responseText;
 								
-	var result = JSON.parse(r);
-	 //Limpiamos las puzzles anteriores
+		var result = JSON.parse(r);
+	 	//Limpiamos las puzzles anteriores
 		 $('#puzzles').empty();
-	 for(var i=0;i<result.length;i++){
-		console.log( result[i].nombre);
+		 
+		 
+		 if(result.length==0){
+				$("#txtPuzzles").val("Conéctate con tu cuenta de facebook para poder crear y ver tus puzzles"); 
+		 }else{
+		 	$("#txtPuzzles").val("Aquí estan tus puzzles:");
+		 
+	 		for(var i=0;i<result.length;i++){
+			console.log( result[i].nombre);
 		
 		 
 		  	var texto="<div  class='puzzleName' onclick='srchPzz("+result[i].id+")'> <p class='puzzleName' >"+result[i].nombre+"</p>";
 	 		$('#puzzles').append(texto);
 			$('#listaPuzzles').show();
+			}
 		  
-	 }
+	 	}
 	 
+}
 	   
 	   
-	   
-  //  });
+ 
   }
   
   //Funcion para busqueda de puzzles
@@ -438,7 +460,7 @@ function setAlias(alias){
 
 function srchPzz(num){	
 	
-	alert(num);
+ 
 		 
 	var r=$.ajax({
 	                data:{"id":num},
@@ -449,7 +471,7 @@ function srchPzz(num){
 						        }).responseText;
 							 
 		var result = JSON.parse(r);
-		alert(result);
+	 
 		$("#puzzles").hide();
 			$("#cPiezas").show();
 		
@@ -462,7 +484,7 @@ function srchPzz(num){
 		 //Limpiamos las piezas anteriores
 		 $('#piezas').empty();
 		  for(var i=0;i<result.length;i++){
-			  alert(result[i].texto);
+		 
 		  	var texto="<div  class='introTxt' onclick='srchPcs("+result[i].id+")'> <p >"+result[i].id+"- "+result[i].texto +"</p>";
 	 		$('#piezas').append(texto);
 		  }
@@ -475,5 +497,50 @@ function srchPzz(num){
 															
 }
   
- 
+ //Funcion para cargar la lista de grupos
+ function cargarGrupos(){
+	 var r=$.ajax({
+	                url: 'php/getGrupos.php', 
+					type:"POST",
+					async:false
+					
+						        }).responseText;
+							 
+		var result = JSON.parse(r);
+		//alert(result);
+	 
+	 
+	 $('#grupos').empty();
+		  for(var i=0;i<result.length;i++){
+		
+		  	var texto="<div  class='introTxt' onclick='srchGrupo("+result[i].id+")'> <p >"+result[i].nombre+"- "+result[i].descripcion +"</p>";
+	 		$('#grupos').append(texto);
+		  }
+ }
   
+  
+  //Nuevo grupo en bbdd
+  function newGrupo(){
+	  
+	  var texto=document.getElementById("textoPieza").value;
+	 
+		
+		//Lanzamos la consulta
+	var r=$.ajax({
+	                data:{"nombre":$('#groupName').val(),
+					"desc":$('#groupDesc').val()},
+	                url:   'php/newGrupo.php', 
+					type:"POST",
+				 
+						        }).responseText;
+								
+									r = JSON.parse(r);
+								alert(r[0]);
+						 
+								if(r==1){
+								alert("tu grupo se ha generado correctamente");	
+								}else{
+									alert("ERROR tu grupo no se ha generado correctamente");	
+								}
+	  
+  }

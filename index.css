@@ -47,10 +47,9 @@ margin-top:30px;
 div.menu {
 	/*background-image:-moz-linear-gradient(bottom, rgb(255,244,140) 37%, rgb(255,255,255) 85%);*/
 	position: relative;
-	 
-	width: 480px;
+	width: 25vw;
 	float: left;
-	height: 100%;
+	height: 100vh;
 	background: #fff48c; /* Old browsers */
 	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
 	/* FF3.6+ */
@@ -96,11 +95,7 @@ div.fondo{
 
 }
 
-div.center {
-	 
-	margin-left: 480px;
 
-}
 
 #botonera {
 	 
@@ -111,7 +106,7 @@ div.center {
 button.menu {
 	background-color: transparent;
 	float: center;
-	width: 320px;
+	width: 70%;
 	margin-left: 60px;
 	margin-top: -3px;
 	height: 50px;
@@ -133,10 +128,10 @@ button.selected{
 button.btn {
 	background-color: transparent;
 	float: center;
-	width: 420px;
-	margin-left: 60px;
+	width: 35%;
+	margin-left: 10%;
 	margin-top: -3px;
-	height: 50px;
+	height: 2.4em;
 	color: black;
 	font-size: 16pt;
 	font-family: "Comic Sans MS", bold;
@@ -148,29 +143,7 @@ button.btn:hover{
 	background-color: #FC9;
 }
 
-#searcher{
-	width:100%;
-	margin:40px 0px;
-	padding:10px;
-	background: #fff48c; /* Old browsers */
-	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff48c),
-		color-stop(100%, #fcfcfc) ); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
-	/* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
-	/* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
-	/* IE10+ */
-	background: linear-gradient(to bottom, #fff48c 0%, #fcfcfc 100%);
-	/* W3C */
-	filter: progid :       DXImageTransform.Microsoft.gradient (      
-		  startColorstr =   
-		   '#fff48c', endColorstr =       '#fcfcfc', GradientType =       0 );
-	/* IE6-9 */
-	
-}
+ 
 p.cabecera {
 	font-family: Arial, Verdana, Geneva, sans-serif;
 	font-size: large;
@@ -269,9 +242,9 @@ img.muneco {
 	padding: 50px 60px 50px 60px;
 }
 div.introTxt{
-	padding: 30px 20px 30px 20px;
-		border: 1px solid black;
-		margin: 0px 30px 0px 30px;	
+		padding: 30px 20px 30px 20px;
+		border: 2px solid orange;
+		margin: 0px 90px 0px 90px;	
 		
 	 	font-family: Arial, Verdana, Geneva, sans-serif;
 }
@@ -292,20 +265,25 @@ div.puzzleName{
 	
 	padding:5px 5px 5px 5px;
 }
+
 #btnLeft{
 float:left;
-background-image:url(img/left.png);	
-width:22px;
-height:43px;
+ transform: rotate(180deg);
+-ms-transform: rotate(180deg); /* IE 9 */
+-webkit-transform: rotate(180deg); /* Safari and Chrome */
+
+ color:orange;
+font-size: 6em;
+cursor:default;
 	
 }
 #btnRight{
-float:right;
-background-image:url(img/right.png);	
-width:22px;
-height:43px;
-	
+	float:right;
+ color:orange;
+font-size: 6em;
+cursor:default;
 }
+
 #mail{
 	float: center;
 	margin-left:100px;
@@ -328,8 +306,12 @@ float:right;
 	float:right;
  }
  #divfb{
+	 	width: 70%;
+
+	 
+	 
 	 height: 50px;
-	 	width: 320px;
+	
 		
 		 
 	float: center;
@@ -352,7 +334,7 @@ float:right;
  div.loginButton{
 	padding-left: 90%;
 	position:relative;
-	top: -30px;
+	padding-top:0.5em;
 	
  }
  #cPuzzles{
@@ -360,18 +342,92 @@ float:right;
 	 padding:20px 0px 0px 20px;
 	 
  }
- div.cabeceraLog{
-	 width:100%;
-	 position:relative;
-	 
- }
+
  #puzzles{
 	margin-top:20px; 
  }
  
+ 
+
+ 
+ 
  div.center{
-	 height:100vh;
-	 padding:10px;
+	
+	 margin-left: 25%;
+	
+   position: relative;
+height:71.4vh;
+ /*
+	background: #fff48c;
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff48c),
+		color-stop(100%, #fcfcfc) ); 
+	background: -webkit-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: -o-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: -ms-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: linear-gradient(to bottom, #fff48c 0%, #fcfcfc 100%);
+
+	filter: progid :       DXImageTransform.Microsoft.gradient (      
+		  startColorstr =   
+		   '#fff48c', endColorstr =       '#fcfcfc', GradientType =       0 );
+
+	*/
+	
+	}
+	
+	
+
+	
+	
+ div.cabecera{
+	 
+	
+	  height: 9vh;
+	 margin-left: 25vw;
+	 position:relative;
+	 padding-top:0.5em;
+	 
+	 background: #fff48c;
+	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff48c),
+		color-stop(100%, #fcfcfc) ); 
+	background: -webkit-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: -o-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: -ms-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
+
+	background: linear-gradient(to bottom, #fff48c 0%, #fcfcfc 100%);
+
+	filter: progid :       DXImageTransform.Microsoft.gradient (      
+		  startColorstr =   
+		   '#fff48c', endColorstr =       '#fcfcfc', GradientType =       0 );
+ }	
+ 
+ #txtCabLog{
+font-family:"Comic Sans MS", bold;
+font-size:1.5em;
+font-variant:small-caps;
+float:left;
+padding:0.5em 0 0 2em;
+  
+	 
+ }
+ 
+#pie{	
+bottom:0px;
+ 
+		margin-left: 25vw;
+	position:relative;
+	
+	 height: 10.1vh;
+   position: relative;
+	padding:2%;
 	background: #fff48c; /* Old browsers */
 	background: -moz-linear-gradient(top, #fff48c 0%, #fcfcfc 100%);
 	/* FF3.6+ */
@@ -388,4 +444,19 @@ float:right;
 	filter: progid :       DXImageTransform.Microsoft.gradient (      
 		  startColorstr =   
 		   '#fff48c', endColorstr =       '#fcfcfc', GradientType =       0 );
-	/* IE6-9 */}
+	/* IE6-9 */
+		
+	}
+	
+	#cGrupos{
+		height: 71.3vh;
+	 overflow:auto;	
+		
+	}
+	
+	#textoPieza{
+	 
+ 	
+	font-size:1em;
+		
+	}

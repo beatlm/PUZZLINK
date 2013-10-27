@@ -3,11 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css"/>
 
 <link rel="stylesheet" href="index.css" />
 <script src="js/jquery-1.8.3.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+
+ // Cargamos el script propio despues de la página para no retardarla
+ function downloadJSAtOnload() {
+ var element = document.createElement("script");
+ element.src = "js/index.js";
+ document.body.appendChild(element);
+ }
+
+ // Check for browser support of event handling capability
+ if (window.addEventListener)
+ window.addEventListener("load", downloadJSAtOnload, false);
+ else if (window.attachEvent)
+ window.attachEvent("onload", downloadJSAtOnload);
+ else window.onload = downloadJSAtOnload;
+
+</script>
 <title>PUZZLINK</title>
 
 </head>
@@ -27,8 +45,8 @@
 <div id="buscar" class="popup">
 	<button id="cerrar" onclick="closePopup();"></button>
 	<p id="textoPopup" class="txtPopup">Introduce el número de la pieza</p>
-	<input id="buscarID" class="txtBuscar" type="number" maxlength="4" name="buscarID"  onclick="this.value=''"></input>
-	<input id="buscarTerm" class="txtBuscar" type="text" name="buscarID" onclick="this.value=''"></input>
+	<input id="buscarID" class="txtBuscar" type="number" maxlength="4" name="buscarID"   onclick="this.value=''"></input>
+	<input id="buscarTerm" class="txtBuscar" type="search"name="buscarID"  onclick="this.value=''"></input>
 	<button id="menuSearch" class="menu" onclick="srchPcs($('#buscarID').val());">Buscar</button>
 </div>
 
@@ -48,7 +66,7 @@
 
 
  <!-- MENU -->
-<div id="menu" width="480" class="menu">
+<div id="menu"  class="menu">
 	<img src="img/cabecera.png" alt="Espacio de libre expresion para el librepensamiento" width="479" height="256" />
 	<div id="botonera">
 			<button id="menu0" class="menu" onclick="mostrar(0);">Inicio</button>
@@ -61,20 +79,22 @@
     <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
 </div>
 
-
-
-<!-- DIV CENTRAL -->
-<div id="center" class="center">
-
 <!-- CABECERA LOGIN -->
 
-	<div id="cabeceraLog" class="cabeceraLog">
+	<div id="cabecera" class="cabecera">
         	<p id="txtCabLog">Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!</p>  
            <div class="loginButton">
             	<fb:login-button  show-faces="false" size="xlarge" autologoutlink="true" ></fb:login-button>
 
         	</div> 
         </div>
+        
+        
+
+<!-- DIV CENTRAL -->
+<div id="center" class="center">
+
+
 
 
 
@@ -120,30 +140,26 @@
          <!-- UNICA PIEZA -->
         
         <div id="pieza">
-        	<a id="btnLeft" onclick="srchNext(false)"></a>
-        	<a id="btnRight" onclick="srchNext(true)" ></a>
+           <a id="btnRight" onclick="srchNext(true)">&rtrif;</a>
+          	<a id="btnLeft" onclick="srchNext(false)">&rtrif;</a>
+        
+   
        
         	<div class="introTxt">
          		<p id="contentPieza"></p>
          		<div id="newPieza"> 
-					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="20"> </textarea>
-					<button onclick="uploadPieza()" class="btn">Guardar</button>
+					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="20" onclick="this.value=''"> Introduce aquí el contenido de tu pieza...</textarea>
+					<button id="btnGuardar" onclick="uploadPieza()" class="btn">Guardar</button>
 				</div>  
         	</div>
+             	
         </div>
         
-        <!-- BOTONERA BUSQUEDA-->  
-        
-        <div id="searcher">
-        	<button class="btn" onclick="showPopup(true);">Buscar piezas por n&uacute;mero</button>
-        	<button class="btn" onclick="showPopup(false);">Buscar piezas por t&eacute;rminos</button>
-			<button class="btn" onclick="newPieza();">Subir una pieza nueva</button>
-        	<button class="btn" onclick="aleatoria();">Pieza aleatoria</button>
-        </div>
+  
 	</div>
 
 
-	<!-- CONTENIDO PUZZLINKERS -->
+	<!------------------------ CONTENIDO PUZZLES --------------------->
 
 	<div id="cPuzzles">
  		
@@ -155,13 +171,72 @@
         <div id="puzzles"></div>
         	
         </div>
-        <button class="btn" onclick="newPuzzle();">Nuevo Puzzle</button>
+      
      </div>
         
+        
+        
+        
+        
+        
 
+	<!------------------------ CONTENIDO GRUPOS ----------------------------->
+
+	<div id="cGrupos">
+	
+     
+        <p>En esta zona se organizan los Puzzles por temas, para una consulta más precisa. </p>
+          <p>Pulsa sobre el grupo que te interese para acceder a los Puzzles y conclusiones.</p>
+     	<p>Puedes proponer nuevos Temas, si estás logado. </p>
     
-</div>
+     	<div id="grupos"></div>
+ 
+    
+	</div>
+    
+    	<div id="cNewGrupo">
+	
+     
+        <p>Añade un nombre y descripción para tu puzzle. </p>
+    
+ 
+
+     <div>
+    <input id="groupName" type="text" placeholder="Nombre..."/>
+    <input id="groupDesc" type="text" placeholder="Descripcion..."</>
+        	
+       
+        </div>
+    
+    
+    
+     
+        
+	</div>
+    
+    
+    </div><!--CENTER->  
 
 
+
+ <!-- PIE PAGINA-->  
+    <div id="pie">    
+        <div id="piePiezas">
+        	<button class="btn" onclick="showPopup(true);">Buscar piezas por n&uacute;mero</button>
+        	<button class="btn" onclick="showPopup(false);">Buscar piezas por t&eacute;rminos</button>
+			<button class="btn" onclick="newPieza();">Subir una pieza nueva</button>
+        	<button class="btn" onclick="aleatoria();">Pieza aleatoria</button>
+        </div>
+        
+        <div id="pieGrupo">
+        	<button class="btn" onclick="newGrupo();">Proponer Grupo</button>
+       </div> 
+       
+       <div id="piePuzzles">
+        	  <button class="btn" onclick="newPuzzle();">Nuevo Puzzle</button>
+       </div> 
+        
+    </div>
+    
 </body>
 </html>
