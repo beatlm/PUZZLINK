@@ -67,7 +67,7 @@
 
  <!-- MENU -->
 <div id="menu"  class="menu">
-	<img src="img/cabecera.png" alt="Espacio de libre expresion para el librepensamiento" width="479" height="256" />
+	<img id="imgPuzzlink" src="img/cabecera.png" alt="Espacio de libre expresion para el librepensamiento"  />
 	<div id="botonera">
 			<button id="menu0" class="menu" onclick="mostrar(0);">Inicio</button>
 			<button id="menu1" class="menu" onclick="mostrar(1);">Piezas</button>
@@ -124,7 +124,7 @@
 
 
 
-<!-- CONTENIDO PIEZAS -->
+<!-------------------- CONTENIDO PIEZAS ----------------------->
 	<div id="cPiezas" class="content2">
 		<div id="intro">
         <p id="txtIntro">Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función "Buscar" es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.</p>
@@ -167,7 +167,7 @@
     
          <!-- VARIAS PUZZLESS -->
         <div id="listaPuzzles">
-        <p>Aquí está la lista de tus puzzles: </p>
+        <p id="txtPuzzles"></p>
         <div id="puzzles"></div>
         	
         </div>
@@ -185,9 +185,8 @@
 	<div id="cGrupos">
 	
      
-        <p>En esta zona se organizan los Puzzles por temas, para una consulta más precisa. </p>
-          <p>Pulsa sobre el grupo que te interese para acceder a los Puzzles y conclusiones.</p>
-     	<p>Puedes proponer nuevos Temas, si estás logado. </p>
+        <p class="txtGrupos">En esta zona se organizan los Puzzles por temas, para una consulta más precisa. 
+        <br>Puedes proponer nuevos Temas, si estás logado. </p>
     
      	<div id="grupos"></div>
  
@@ -197,15 +196,13 @@
     	<div id="cNewGrupo">
 	
      
-        <p>Añade un nombre y descripción para tu puzzle. </p>
+        <p class="txtGrupos">Añade un nombre y descripción para el nuevo Grupo. </p>
     
  
 
-     <div>
-    <input id="groupName" type="text" placeholder="Nombre..."/>
-    <input id="groupDesc" type="text" placeholder="Descripcion..."</>
-        	
-       
+     	<div class="formAlta">
+    		Nombre<input id="groupName" type="text" placeholder="Nombre..."/>
+    		Descripción (max 20)<input id="groupDesc" type="text" placeholder="Descripcion..."</>      
         </div>
     
     
@@ -229,11 +226,15 @@
         </div>
         
         <div id="pieGrupo">
-        	<button class="btn" onclick="newGrupo();">Proponer Grupo</button>
+         <p class="txtPieGrupo">Pulsa sobre el grupo que te interese para acceder a los Puzzles y conclusiones.</p>
+        	<button class="btn" onclick="mostrar(7);">Proponer Grupo</button>
        </div> 
        
        <div id="piePuzzles">
         	  <button class="btn" onclick="newPuzzle();">Nuevo Puzzle</button>
+       </div> 
+            <div id="pieNuevoGrupo">
+        	  <button class="btn" onclick="newGrupo();">Nuevo Grupo</button>
        </div> 
         
     </div>
