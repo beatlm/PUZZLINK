@@ -22,6 +22,7 @@ $(document).ready(function(){
 			$("#cGrupos").hide();
 				$("#cNewGrupo").hide();
 					$("#pie").hide();
+						$("#cNewPuzzle").hide();
 			
 });
 
@@ -31,9 +32,16 @@ function mostrar(id){
 	$(".content2").hide();
 	$("#cMain").hide();
 	$("#cPuzzles").hide();
-		$("#cGrupos").hide();
-				$("#cNewGrupo").hide();
-				$("#pie").hide();
+	$("#cGrupos").hide();
+	$("#cNewGrupo").hide();
+		$("#cNewPuzzle").hide();
+	$("#pie").hide();
+	
+	$("#pieGrupo").hide();
+	$("#piePiezas").hide();
+	$("#piePuzzles").hide();
+	$("#pieNuevoGrupo").hide();
+		$("#pieNuevoPuzzle").hide();
 		 
 	$("#menu0").removeClass( "selected" );
 	$("#menu1").removeClass( "selected" );
@@ -50,38 +58,28 @@ function mostrar(id){
 	break;
 	case(1):
 		$("#cPiezas").show();
-			$("#pie").show();
-			$("#pieGrupo").hide();
-			$("#piePuzzles").hide();
-			$("#piePiezas").show();
-			 $("#pieNuevoGrupo").hide();
+		$("#pie").show();
+		$("#piePiezas").show();
 	 	$("#menu1").addClass( "selected" );
 		srchPcs(1);//Buscamos la primera pieza
 	break;
-	case (2):
-		
-		  $("#menu2").addClass( "selected" );
-		
+	case (2):		
+		  $("#menu2").addClass( "selected" );		
 	break;
 	case(3):
 		$("#cPuzzles").show();
-			$("#pie").show();
-		$("#pieGrupo").hide();
-			$("#piePiezas").hide();
-			$("#pieNuevoGrupo").hide();
-			$("#piePuzzles").show();
-		  $("#menu3").addClass( "selected" );
-		  cargaPuzzles( );
+		$("#puzzles").show();
+		$("#pie").show();
+		$("#piePuzzles").show();
+		$("#menu3").addClass( "selected" );
+		cargaPuzzles();
 	break;
 	case(4)://Grupos
 		cargarGrupos();
 		$("#cGrupos").show();
 		$("#pie").show();
-		$("#pieGrupo").show();
-			$("#piePiezas").hide();
-			$("#pieNuevoGrupo").hide();
-			$("#piePuzzles").hide();
-		 $("#menu4").addClass( "selected" ); 
+		$("#pieGrupo").show();		
+		$("#menu4").addClass( "selected" ); 
 	break;
 	case(5): //Pantalle de registro
 		$("#cRegistro").show("slow");
@@ -93,16 +91,18 @@ function mostrar(id){
 	break;
 	case(7)://Nuevo grupo
 		$("#cNewGrupo").show();
-		$('#cGrupos').hide();
-		 $("#menu4").addClass( "selected" ); 
-		 $("#pieNuevoGrupo").show();
-		 $("#pie").show();
-		$("#pieGrupo").hide();
-			$("#piePiezas").hide();
-		 
-			$("#piePuzzles").hide();
+		$("#menu4").addClass( "selected" ); 
+		$("#pieNuevoGrupo").show();
+		$("#pie").show();
+
 	
 	break;
+	case(8):
+	$("#menu3").addClass( "selected" ); 
+		$("#cNewPuzzle").show();
+		$("#pie").show();
+			$("#pieNuevoPuzzle").show();
+	
 	}
 }
 
@@ -187,11 +187,14 @@ function okPiezas(restrs){
 		$("#variasPiezas").hide();	  
 		$("#pieza").show();
 		$("#contentPieza").show();
+		$("#btnLeft").show();
+			$("#btnRight").show();
 	
 	  	$("#newPieza").hide();
 		$("#contentPieza").text(result[0].id+"- "+result[0].texto);
-		if(result[0].id==1){
+		if(result[0].id==1){//Primera pieza
 			$("#btnLeft").hide();
+		 
 		}
 		
 	
@@ -494,12 +497,6 @@ function srchPzz(num){
 		  	var texto="<div  class='introTxt' onclick='srchPcs("+result[i].id+")'> <p >"+result[i].id+"- "+result[i].texto +"</p>";
 	 		$('#piezas').append(texto);
 		  }
-		  
-		  
-	/* for(var i=0;i<result.length;i++){
-		console.log( result[i].nombre);
-	 }*/
-	
 															
 }
   
@@ -513,7 +510,7 @@ function srchPzz(num){
 						        }).responseText;
 							 
 		var result = JSON.parse(r);
-		//alert(result);
+
 	 
 	 
 	 $('#grupos').empty();
@@ -536,17 +533,46 @@ function srchPzz(num){
 	                data:{"nombre":$('#groupName').val(),
 					"desc":$('#groupDesc').val()},
 	                url:   'php/newGrupo.php', 
-					type:"POST",
-				 
-						        }).responseText;
+					async:false,
+					type:"POST"}).responseText;
 							 
-								//	r = JSON.parse(r);
-						 
-						 alert(r);
-								if(r=='1'){
-								alert("tu grupo se ha generado correctamente");	
+								
+			var result = JSON.parse(r);			 
+					 
+								if(result[0].insert=='1'){
+								alert("Tu grupo se ha generado correctamente");	
+								mostrar(4);
 								}else{
 									alert("ERROR tu grupo no se ha generado correctamente");	
 								}
+	  
+  }
+  
+  function newPuzzle(){
+	  
+	  if($("#puzzleName").val().length==0){
+		alert("por favor introduce un nombre para el nuevo puzzle");  
+	  }else{
+		  
+	
+		  
+		  var r=$.ajax({data:{"nombre":$('#puzzleName').val(),
+							"usuario":localStorage.uid},
+	                url:'php/newPuzzle.php', 
+					type:"POST",
+					async:false
+						        }).responseText;
+			var result = JSON.parse(r);
+		 
+			if(result[0].insert=='1'){
+				alert("Tu puzzle se ha generado correctamente");	
+				mostrar(3);
+			}else{
+				alert("ERROR tu puzzle no se ha generado correctamente");	
+			}
+	  
+		  
+		  
+	  }
 	  
   }
