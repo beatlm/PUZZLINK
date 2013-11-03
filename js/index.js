@@ -23,11 +23,12 @@ $(document).ready(function(){
 				$("#cNewGrupo").hide();
 					$("#pie").hide();
 						$("#cNewPuzzle").hide();
+						  $("#cUsuarios").hide();	
 			
 });
 
 
-//Funcion para mostrar la seleccion de in boton onclick
+  /************************** MENU *********************/
 function mostrar(id){
 	$(".content2").hide();
 	$("#cMain").hide();
@@ -42,6 +43,7 @@ function mostrar(id){
 	$("#piePuzzles").hide();
 	$("#pieNuevoGrupo").hide();
 		$("#pieNuevoPuzzle").hide();
+		  $("#cUsuarios").hide();	
 		 
 	$("#menu0").removeClass( "selected" );
 	$("#menu1").removeClass( "selected" );
@@ -64,7 +66,9 @@ function mostrar(id){
 		srchPcs(1);//Buscamos la primera pieza
 	break;
 	case (2):		
-		  $("#menu2").addClass( "selected" );		
+		  $("#menu2").addClass( "selected" );	
+		  $("#cUsuarios").show();	
+		  getUsuarios()
 	break;
 	case(3):
 		$("#cPuzzles").show();
@@ -106,7 +110,7 @@ function mostrar(id){
 	}
 }
 
-
+  /************************** PIEZAS *********************/
 
 //Funcion para buscar la pieza siguiente o anterior. (next=true--ªsiguiente)
 function srchNext(next){
@@ -133,7 +137,29 @@ function srchNext(next){
  	
  }
 
-
+//Funcion que muestra una pieza aleatoria de entre las existentes
+function aleatoria(){	
+			
+		var last=getLastPiece();
+	 
+		srchPcs(Math.floor((Math.random()*last)+1));
+														
+}
+ 
+ 
+ function getLastPiece(){
+	 
+	var r=	$.ajax({           
+	                url:'php/getId.php', 
+					type:"POST", async:false		
+						        }).responseText;
+								
+	var result = JSON.parse(r);
+	 
+	return result[0].id;
+									
+	 
+ }
 
 //Funcion para busqueda de piezas
 // num-> el numero de la pieza a buscar
@@ -252,6 +278,10 @@ function uploadPieza(){
 						        });
 	
 }
+
+
+  /************************** POPUPS *********************/
+  
 function showPopup(num){
 		$("#fondo").show();
 		$("#buscar").show();
@@ -264,6 +294,7 @@ function showPopup(num){
 		$("#buscarID").hide();
 		$("#buscarTerm").show();}
 }
+
 function closePopup(){
 	$("#fondo").hide();
 		$("#buscar").hide();
@@ -278,37 +309,16 @@ function showPopupId(id){
 	document.getElementById("txtAlta").innerHTML="Enhorabuena, se ha dado de alta su pieza con ID: "+id;
 		
 }
+
 function errorAlta(){
 alert("no se ha podido dar de alta la pieza");	
 }
 
 
-//Funcion que muestra una pieza aleatoria de entre las existentes
-function aleatoria(){	
-			
-		var last=getLastPiece();
-	 
-		srchPcs(Math.floor((Math.random()*last)+1));
-														
-}
+
  
  
- function getLastPiece(){
-	 
-	var r=	$.ajax({           
-	                url:'php/getId.php', 
-					type:"POST", async:false		
-						        }).responseText;
-								
-	var result = JSON.parse(r);
-	 
-	return result[0].id;
-									
-	 
- }
- 
- 
- <!-- FUNCIONES FACEBOOK -->
+ /************************** LOGIN FB *********************/
  function  fbAsyncInit ()  {
 	//alert("fbAsyncInit");
     FB.init({
@@ -423,6 +433,9 @@ function setAlias(alias){
    };
    
 
+
+
+ /************************** PUZZLES *********************/
 function cargaPuzzles() {
 
 	if(localStorage.uid=="false"){
@@ -453,8 +466,10 @@ function cargaPuzzles() {
 		 
 		  	var texto="<div  class='puzzleName' onclick='srchPzz("+result[i].id+")'> <p class='puzzleName' >"+result[i].nombre+"</p>";
 	 		$('#puzzles').append(texto);
-			$('#listaPuzzles').show();
+		
 			}
+				$('#listaPuzzles').show();
+				
 		  
 	 	}
 	 
@@ -463,6 +478,35 @@ function cargaPuzzles() {
 	   
  
   }
+  
+  function newPuzzle(){
+	  
+	  if($("#puzzleName").val().length==0){
+		alert("por favor introduce un nombre para el nuevo puzzle");  
+	  }else{
+		  
+	
+		  
+		  var r=$.ajax({data:{"nombre":$('#puzzleName').val(),
+							"usuario":localStorage.uid},
+	                url:'php/newPuzzle.php', 
+					type:"POST",
+					async:false
+						        }).responseText;
+			var result = JSON.parse(r);
+		 
+			if(result[0].insert=='1'){
+				alert("Tu puzzle se ha generado correctamente");	
+				mostrar(3);
+			}else{
+				alert("ERROR tu puzzle no se ha generado correctamente");	
+			}
+	  
+		  
+		  
+	  }
+	  
+  }  
   
   //Funcion para busqueda de puzzles
 // num-> el numero del puzzle a buscar
@@ -499,7 +543,41 @@ function srchPzz(num){
 		  }
 															
 }
+
+
+//Busca un puzzle que pertenece a un userID
+function srchPuzzleUser(userID,name){
+		 
+	 var r=	$.ajax({    data:{"id":  userID},      
+	                url:'php/getPuzzles.php', 
+					type:"POST", async:false
+					
+						        }).responseText;
+							 
+	var result = JSON.parse(r);
+		
+	 $('#puzzles').empty();
+		 
+		
+	
+		 	$("#txtPuzzles").text("Puzzles del usuario :"+name);
+		 
+	 		for(var i=0;i<result.length;i++){
+			console.log( result[i].nombre);
+			var texto="<div  class='puzzleName' onclick='srchPzz("+result[i].id+")'> <p class='puzzleName' >"+result[i].nombre+"</p>";
+	 		$('#puzzles').append(texto);
+			}
+			$('#listaPuzzles').show();
+			
+			$('#cPuzzles').show();
+						$('#cUsuarios').hide();
+	 
+	
+	
+}
   
+  
+   /************************** GRUPOS *********************/
  //Funcion para cargar la lista de grupos
  function cargarGrupos(){
 	 var r=$.ajax({
@@ -520,9 +598,7 @@ function srchPzz(num){
 	 		$('#grupos').append(texto);
 		  }
  }
-  
-  
-  //Nuevo grupo en bbdd
+   
   function newGrupo(){
 	  
 	  var texto=document.getElementById("textoPieza").value;
@@ -548,31 +624,19 @@ function srchPzz(num){
 	  
   }
   
-  function newPuzzle(){
-	  
-	  if($("#puzzleName").val().length==0){
-		alert("por favor introduce un nombre para el nuevo puzzle");  
-	  }else{
-		  
-	
-		  
-		  var r=$.ajax({data:{"nombre":$('#puzzleName').val(),
-							"usuario":localStorage.uid},
-	                url:'php/newPuzzle.php', 
+  /************************** PUZZLINKERS *********************/
+  
+  function getUsuarios(){
+	  var r=$.ajax({
+	                url:'php/getUsuarios.php', 
 					type:"POST",
 					async:false
 						        }).responseText;
 			var result = JSON.parse(r);
-		 
-			if(result[0].insert=='1'){
-				alert("Tu puzzle se ha generado correctamente");	
-				mostrar(3);
-			}else{
-				alert("ERROR tu puzzle no se ha generado correctamente");	
-			}
-	  
-		  
-		  
-	  }
+		 $('#usuarios').empty();
+			 for(var i=0;i<result.length;i++){
+				 var texto="<div  class='bigTxt' onclick='srchPuzzleUser("+result[i].user_id+",\""+result[i].user_name+"\")'> <p >"+result[i].user_name+"</p></div>";
+	 		$('#usuarios').append(texto);
+			 }
 	  
   }
