@@ -24,6 +24,9 @@ $(document).ready(function(){
 					$("#pie").hide();
 						$("#cNewPuzzle").hide();
 						  $("#cUsuarios").hide();	
+						    $("#cPiezas").hide();
+							
+								$("#fbButton").click(function(){FB.login();});
 			
 });
 
@@ -42,8 +45,9 @@ function mostrar(id){
 	$("#piePiezas").hide();
 	$("#piePuzzles").hide();
 	$("#pieNuevoGrupo").hide();
-		$("#pieNuevoPuzzle").hide();
-		  $("#cUsuarios").hide();	
+	$("#pieNuevoPuzzle").hide();
+	$("#cUsuarios").hide();	
+	$("#cPiezas").hide();
 		 
 	$("#menu0").removeClass( "selected" );
 	$("#menu1").removeClass( "selected" );
@@ -63,6 +67,8 @@ function mostrar(id){
 		$("#pie").show();
 		$("#piePiezas").show();
 	 	$("#menu1").addClass( "selected" );
+		$("#btnLrft").hide();
+		$("#puzzlePieza").hide();
 		srchPcs(1);//Buscamos la primera pieza
 	break;
 	case (2):		
@@ -75,6 +81,8 @@ function mostrar(id){
 		$("#puzzles").show();
 		$("#pie").show();
 		$("#piePuzzles").show();
+		$("#pieAnadePiezas").hide();
+		
 		$("#menu3").addClass( "selected" );
 		cargaPuzzles();
 	break;
@@ -84,29 +92,40 @@ function mostrar(id){
 		$("#pie").show();
 		$("#pieGrupo").show();		
 		$("#menu4").addClass( "selected" ); 
-	break;
+		break;
 	case(5): //Pantalle de registro
-		$("#cRegistro").show("slow");
-	 
-	break;
+		$("#cRegistro").show("slow"); 
+		break;
 	case(6)://Pantalla gris
 		$("#gris").show("slow");
 		//$("#menu5").css("background-color","lightgray");
-	break;
+		break;
 	case(7)://Nuevo grupo
 		$("#cNewGrupo").show();
 		$("#menu4").addClass( "selected" ); 
 		$("#pieNuevoGrupo").show();
 		$("#pie").show();
-
-	
-	break;
+		break;
+		
 	case(8):
-	$("#menu3").addClass( "selected" ); 
+		$("#menu3").addClass( "selected" ); 
 		$("#cNewPuzzle").show();
 		$("#pie").show();
-			$("#pieNuevoPuzzle").show();
+		$("#pieNuevoPuzzle").show();
+		break;	
 	
+	case(9):
+		$("#cPiezas").show();
+		$("#pie").show();
+		$("#piePiezas").show();
+	 	$("#menu1").addClass( "selected" );
+		$("#btnLrft").hide();
+		$("#puzzlePieza").show();
+	 
+		$("#btnAddPieza").text("Añadir pieza al puzzle "+localStorage.puzzle);
+		
+		srchPcs(1);//Buscamos la primera pieza
+		break;
 	}
 }
 
@@ -114,6 +133,7 @@ function mostrar(id){
 
 //Funcion para buscar la pieza siguiente o anterior. (next=true--ªsiguiente)
 function srchNext(next){
+ 
 	var posicion=$("#contentPieza").html().indexOf("-",0);
 	var final=$("#contentPieza").html().substring(0,posicion);
 	$("#btnLeft").show();
@@ -123,16 +143,10 @@ function srchNext(next){
 		final=Number(final)+Number(1);
 	}else{
 		final=Number(final)-Number(1);
-		if(final==0){
-			return;//Si es la pieza uno no hacemos nada
-		}
+
+	
 	}
-	var last= getLastPiece();
- 
- 	if(last==final){
-	 	$("#btnRight").hide();
-		
- 	}
+	
 		srchPcs(final);
  	
  }
@@ -164,7 +178,22 @@ function aleatoria(){
 //Funcion para busqueda de piezas
 // num-> el numero de la pieza a buscar
 // Si no se pasa num, se busca por término
-function srchPcs(num){	
+function srchPcs(num){
+	alert('pieza'+num);	
+$("#btnRight").show();
+$("#btnLeft").show();
+localStorage.pieza=num;
+ if(num==1){
+	 
+				$("#btnLeft").hide();
+ }
+ var last= getLastPiece();
+ 
+ 	if(Number(last)==Number(num)){
+		 
+	 	$("#btnRight").hide();
+		
+ 	}
 	
 	if(!num){//No se pasa el numero de pieza-->Busqueda por termino
 		//Lanzamos la consulta
@@ -213,15 +242,10 @@ function okPiezas(restrs){
 		$("#variasPiezas").hide();	  
 		$("#pieza").show();
 		$("#contentPieza").show();
-		$("#btnLeft").show();
-			$("#btnRight").show();
 	
 	  	$("#newPieza").hide();
 		$("#contentPieza").text(result[0].id+"- "+result[0].texto);
-		if(result[0].id==1){//Primera pieza
-			$("#btnLeft").hide();
-		 
-		}
+
 		
 	
 	  }else{//Se encuentran varias piezas
@@ -230,8 +254,7 @@ function okPiezas(restrs){
 	  	$("#variasPiezas").show();
 	  	$("#pieza").hide();
 	  	$("#contentPieza").hide();
-		$("#btnLeft").hide();
-		$("#btnRight").hide();
+	
 		 //Limpiamos las piezas anteriores
 		 $('#piezas').empty();
 		  for(var i=0;i<result.length;i++){
@@ -320,12 +343,12 @@ alert("no se ha podido dar de alta la pieza");
  
  /************************** LOGIN FB *********************/
  function  fbAsyncInit ()  {
-	//alert("fbAsyncInit");
+	alert("fbAsyncInit");
     FB.init({
       appId      : '442776155842772', // App ID
       channelUrl : '//WWW.puzzlink.hol.es/channel.html', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
+      status     : false, // check login status
+      cookie     : false, // enable cookies to allow the server to access the session
       xfbml      : true  // parse XFBML
     });  
    
@@ -337,7 +360,7 @@ alert("no se ha podido dar de alta la pieza");
   // whenever someone who was previously logged out tries to log in again, the correct case below 
   // will be handled. 
   FB.Event.subscribe('auth.authResponseChange', function(response) {
-	 
+	
 	//alert("response "+response.status);
     // Here we specify what we do with the response anytime this event occurs. 
     if (response.status === 'connected') {
@@ -350,19 +373,25 @@ alert("no se ha podido dar de alta la pieza");
 	  
 	  	FB.api('/me', function(response) {
   			//alert(response.name);
-			localStorage.name = response.name;
-   			//$("#txtCabLog").text("Usuario: "+response.name);
+		//	localStorage.name = response.name;alert(localSt
+			$("#foto").attr("src","https://graph.facebook.com/"+response.username+"/picture");
+			$("#txtCabLog").text("Alias: "+response.username);
+		
+			
 		});
 	
-	
-		var r=	$.ajax({data:{"id":localStorage.uid}, 
+	$("#fbButton").click(function(){FB.logout();});
+	 
+	$("#fbButton").css("background-image","images/Transparent.gif");
+	 
+	/*	var r=	$.ajax({data:{"id":localStorage.uid}, 
 	                url:'php/login.php', 
 					type:"POST", async:false
 					
 						        }).responseText;
 								
 		var result = JSON.parse(r);
-							 
+		alert("2");					 
 		if(result.length>0){
 			 
 	 		$("#txtCabLog").text("Alias: "+result[0].user_name);
@@ -370,7 +399,10 @@ alert("no se ha podido dar de alta la pieza");
 		}else{
 			
 			$('#popupAlias').show();
-		}
+		}*/
+		
+		
+		
 
 	
 	      
@@ -394,16 +426,18 @@ alert("no se ha podido dar de alta la pieza");
       // dialog right after they log in to Facebook. 
       // The same caveats as above apply to the FB.login() call here.
 	   $("#txtCabLog").text("Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!");
-      FB.login();
+    //  FB.login();
 	    mostrar(0);
 	    localStorage.uid=false;
+		$("#foto").attr("src","");
+		$("#fbButton").click(function(){FB.login();});
     }
   });
   
 
   };
   
-function setAlias(alias){
+/*function setAlias(alias){
 	var r=	$.ajax({data:{"alias":alias,
 							"id":localStorage.uid}, 
 	                url:'php/alias.php', 
@@ -420,7 +454,7 @@ function setAlias(alias){
 		closePopup();
 	}
 	
-}
+}*/
 
   // Load the SDK asynchronously
   function cargaFb(d){
@@ -432,6 +466,8 @@ function setAlias(alias){
      ref.parentNode.insertBefore(js, ref);
    };
    
+
+
 
 
 
@@ -462,9 +498,8 @@ function cargaPuzzles() {
 		 
 	 		for(var i=0;i<result.length;i++){
 			console.log( result[i].nombre);
-		
-		 
-		  	var texto="<div  class='puzzleName' onclick='srchPzz("+result[i].id+")'> <p class='puzzleName' >"+result[i].nombre+"</p>";
+
+		  	var texto="<div class='puzzleName' onclick='srchPzz("+result[i].id+",&quot;"+result[i].nombre+"&quot;);'> <p class='puzzleName' >"+result[i].nombre+"</p>";
 	 		$('#puzzles').append(texto);
 		
 			}
@@ -493,6 +528,8 @@ function cargaPuzzles() {
 					type:"POST",
 					async:false
 						        }).responseText;
+								
+			$("#puzzleName").val('');
 			var result = JSON.parse(r);
 		 
 			if(result[0].insert=='1'){
@@ -511,9 +548,10 @@ function cargaPuzzles() {
   //Funcion para busqueda de puzzles
 // num-> el numero del puzzle a buscar
 
-function srchPzz(num){	
-	
- 
+function srchPzz(num,name){	
+//	alert(num.nombre+num.id);
+localStorage.puzzle=name;
+localStorage.puzzleID=num;
 		 
 	var r=$.ajax({
 	                data:{"id":num},
@@ -526,20 +564,24 @@ function srchPzz(num){
 		var result = JSON.parse(r);
 	 
 		$("#puzzles").hide();
-			$("#cPiezas").show();
-		
-		$("#txtIntro").text("Hay varias piezas en este puzzle.");
+		$("#cPiezas").show();
+		if(result.length>0){		
+			$("#txtIntro").text("Estas son las piezas del puzzle."+name);
+		}else{
+			$("#txtIntro").text("El puzzle "+name+" aún no tiene piezas, añádelas!.");
+		}
 	  	$("#variasPiezas").show();
 	  	$("#pieza").hide();
 	  	$("#contentPieza").hide();
 		$("#btnLeft").hide();
 		$("#btnRight").hide();
+		$("#pieAnadePiezas").show();
 		 //Limpiamos las piezas anteriores
-		 $('#piezas').empty();
+		$('#piezas').empty();
 		  for(var i=0;i<result.length;i++){
 		 
-		  	var texto="<div  class='introTxt' onclick='srchPcs("+result[i].id+")'> <p >"+result[i].id+"- "+result[i].texto +"</p>";
-	 		$('#piezas').append(texto);
+		  		var texto="<div class='puzzleName' onclick='srchPcs("+result[i].id+");'> <p class='puzzleName' >"+result[i].nombre+"</p>";
+				$('#piezas').append(texto);
 		  }
 															
 }
@@ -561,22 +603,48 @@ function srchPuzzleUser(userID,name){
 		
 	
 		 	$("#txtPuzzles").text("Puzzles del usuario :"+name);
-		 
+	
 	 		for(var i=0;i<result.length;i++){
 			console.log( result[i].nombre);
-			var texto="<div  class='puzzleName' onclick='srchPzz("+result[i].id+")'> <p class='puzzleName' >"+result[i].nombre+"</p>";
+			var texto="<div  class='puzzleName' onclick='srchPcs("+result[i].id+")'> <p class='puzzleName' >"+result[i].nombre+"</p>";
 	 		$('#puzzles').append(texto);
 			}
 			$('#listaPuzzles').show();
 			
 			$('#cPuzzles').show();
-						$('#cUsuarios').hide();
+			$('#cUsuarios').hide();
 	 
 	
 	
 }
   
-  
+function anadirPiezaPuzzle(){
+	
+	
+	
+	 var r=	$.ajax({    data:{"puzzle":  localStorage.puzzleID,
+	 							"pieza":localStorage.pieza},      
+	                url:'php/newPiezaPuzzle.php', 
+					type:"POST", async:false
+					
+						        }).responseText;
+							 
+	var result = JSON.parse(r);
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+
+	
    /************************** GRUPOS *********************/
  //Funcion para cargar la lista de grupos
  function cargarGrupos(){
@@ -640,3 +708,5 @@ function srchPuzzleUser(userID,name){
 			 }
 	  
   }
+
+

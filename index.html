@@ -74,7 +74,7 @@
 			<button id="menu2" class="menu" onclick="mostrar(2);" >Puzzlinkers</button>
 			<button id="menu3" class="menu" onclick="mostrar(3);">Puzzles obtenidos</button>
 			<button id="menu4" class="menu" onclick="mostrar(4);">Grupos</button>
-			<div id="divfb" onclick="window.open('http://www.facebook.com')"><p id="fb">Síguenos en </p><img id="iconfb" src="img/facebook.png"></div>
+			<button id="menu5" class="menu" onclick="window.open('http://www.facebook.com')">Síguenos en <img id="iconfb" src="img/facebook.png"></button>
 	</div>
     <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
 </div>
@@ -83,10 +83,12 @@
 
 	<div id="cabecera" class="cabecera">
         	<p id="txtCabLog">Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!</p>  
-           <div class="loginButton">
+            <img id="foto"/> 
+            <button id="fbButton" >Logout</button>
+          <!-- <div class="loginButton">
             	<fb:login-button  show-faces="false" size="xlarge" autologoutlink="true" ></fb:login-button>
 
-        	</div> 
+        	</div> -->
         </div>
         
         
@@ -125,10 +127,10 @@
 
 
 <!-------------------- CONTENIDO PIEZAS ----------------------->
-	<div id="cPiezas" class="content2">
-		<div id="intro">
-        <p id="txtIntro">Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función "Buscar" es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.</p>
-        </div>
+	<div id="cPiezas" class="scroll">
+	 
+        <p id="txtIntro" class="txtGrupos">Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función "Buscar" es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.</p>
+        
         
          <!-- VARIAS PIEZAS -->
         <div id="variasPiezas">
@@ -140,19 +142,24 @@
          <!-- UNICA PIEZA -->
         
         <div id="pieza">
-           <a id="btnRight" onclick="srchNext(true)">&rtrif;</a>
-          	<a id="btnLeft" onclick="srchNext(false)">&rtrif;</a>
+           <a id="btnRight"  onclick="srchNext(true)">&rtrif;</a>
+          	<a id="btnLeft"  onclick="srchNext(false)">&rtrif;</a>
         
    
        
         	<div class="introTxt">
          		<p id="contentPieza"></p>
+                
+            
          		<div id="newPieza"> 
-					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="20" onclick="this.value=''"> Introduce aquí el contenido de tu pieza...</textarea>
+					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="10" placeholder="Introduce aquí el contenido de tu pieza..." onclick="this.value=''"> </textarea>
 					<button id="btnGuardar" onclick="uploadPieza()" class="btn">Guardar</button>
 				</div>  
         	</div>
-             	
+            <div id="puzzlePieza">
+               
+                <button id="btnAddPieza" class="btn" onclick="anadirPiezaPuzzle();">Añadir esta pieza al puzzle</button>
+            </div>
         </div>
         
   
@@ -161,34 +168,27 @@
 
 	<!------------------------ CONTENIDO PUZZLES --------------------->
 
-	<div id="cPuzzles">
- 		
-	
+	<div id="cPuzzles" class="scroll">
+ 			
     
          <!-- VARIAS PUZZLESS -->
-        <div id="listaPuzzles">
-        <p id="txtPuzzles"></p>
-        <div id="puzzles"></div>
-        	
+        <div id="listaPuzzles" >
+        	<p id="txtPuzzles" class="txtGrupos"></p>
+        	<div id="puzzles"></div>
         </div>
       
      </div>
         
        	<div id="cNewPuzzle">
-	
-     
-        <p class="txtGrupos">Añade un nombre para el nuevo Puzzle. </p>
+        	<p class="txtGrupos">Añade un nombre para el nuevo Puzzle. </p>
     
  
 
-     	<div class="formAlta">
-    		Nombre <input id="puzzleName" type="text" placeholder="Nombre..."/>
+     		<div class="formAlta">
+    			Nombre <input id="puzzleName" type="text" placeholder="Nombre..."/>
     		  
-        </div>
-    
-    
-    
-     
+        	</div>
+  
         
 	</div> 
         
@@ -198,7 +198,7 @@
 
 	<!------------------------ CONTENIDO GRUPOS ----------------------------->
 
-	<div id="cGrupos">
+	<div id="cGrupos" class="scroll">
 	
      
         <p class="txtGrupos">En esta zona se organizan los Puzzles por temas, para una consulta más precisa. 
@@ -217,7 +217,7 @@
  
 
      	<div class="formAlta">
-    		Nombre<input id="groupName" type="text" placeholder="Nombre..."/>
+    		Nombre<input id="groupName" type="text" placeholder="Nombre..."/><br/>
     		Descripción (max 20)<input id="groupDesc" type="text" placeholder="Descripcion..."</>      
         </div>
     
@@ -231,10 +231,10 @@
     
     
     <!------------------ PUZZLINKERS ------------->
-    <div id="cUsuarios">
+    <div id="cUsuarios" class="scroll">
 	
      
-        <p class="txtUsuarios">En esta zona están los usuarios que han creado puzzles, pulsa sobre ellos para ver el detalle de las piezas. </p>
+        <p class="txtGrupos">En esta zona están los usuarios que han creado puzzles, pulsa sobre ellos para ver el detalle de las piezas. </p>
     
      	<div id="usuarios"></div>
  
@@ -262,12 +262,13 @@
        
        <div id="piePuzzles">
         	  <button class="btn" onclick="mostrar(8);">Nuevo Puzzle</button>
+              <button id="pieAnadePiezas" class="btn" onclick="mostrar(9);">Añadir piezas</button> 
        </div> 
        <div id="pieNuevoGrupo">
         	  <button class="btn" onclick="newGrupo();">Nuevo Grupo</button>
        </div> 
-          <div id="pieNuevoPuzzle">
-        	  <button class="btn" onclick="newPuzzle();">Nuevo Puzzle</button>
+       <div id="pieNuevoPuzzle">
+        	  <button class="btn" onclick="newPuzzle();">Crear Puzzle</button>
        </div> 
         
     </div>
