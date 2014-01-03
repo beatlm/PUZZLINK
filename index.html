@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -43,26 +42,26 @@
 
  <!-- POPUP DE BÚSQUEDA-->
 <div id="buscar" class="popup">
-	<button id="cerrar" onclick="closePopup();"></button>
+	<button id="cerrar" onclick="closePopup();">X</button>
 	<p id="textoPopup" class="txtPopup">Introduce el número de la pieza</p>
-	<input id="buscarID" class="txtBuscar" type="number" maxlength="4" name="buscarID"   onclick="this.value=''"></input>
+	<input id="buscarID" class="txtBuscar" maxlength="4" name="buscarID"   onclick="this.value=''"></input>
 	<input id="buscarTerm" class="txtBuscar" type="search"name="buscarID"  onclick="this.value=''"></input>
-	<button id="menuSearch" class="menu" onclick="srchPcs($('#buscarID').val());">Buscar</button>
+	<button id="menuSearch" class="menu" onclick="showPieces(searchPieces($('#buscarID').val()));">Buscar</button>
 </div>
 
 <!-- POPUP ALTA OK-->
-<div id="popupAlta" class="popup">
-	<p id="txtAlta" class="texto"></p>
+<div id="popupAceptar" class="popup">
+	<p id="txtAceptar" class="texto"></p>
 	<button id="menuSearch" class="menu" onclick="closePopup();">Aceptar</button>
 </div>
 
  <!-- POPUP DE ALIAS-->
-<div id="popupAlias" class="popup">
-	<button id="cerrar" onclick="closePopup();"></button>
+<!--<div id="popupAlias" class="popup">
+	<button id="cerrar" onclick="closePopup();">X</button>
 	<p class="txtPopup">Introduce tu alias para Puzzlink</p>
 	<input id="aliasInput" class="txtBuscar" type="text" name="buscarID" onclick="this.value=''"></input>
 	<button id="aliasButton" class="menu" onclick="setAlias($('#aliasInput').val());">Aceptar</button>
-</div>
+</div>-->
 
 
  <!-- MENU -->
@@ -72,9 +71,9 @@
 			<button id="menu0" class="menu" onclick="mostrar(0);">Inicio</button>
 			<button id="menu1" class="menu" onclick="mostrar(1);">Piezas</button>
 			<button id="menu2" class="menu" onclick="mostrar(2);" >Puzzlinkers</button>
-			<button id="menu3" class="menu" onclick="mostrar(3);">Puzzles obtenidos</button>
+			<button id="menu3" class="menu" onclick="mostrar(3);">Puzzles </button>
 			<button id="menu4" class="menu" onclick="mostrar(4);">Grupos</button>
-			<button id="menu5" class="menu" onclick="window.open('http://www.facebook.com')">Síguenos en <img id="iconfb" src="img/facebook.png"></button>
+			<button id="menu5" class="menu" onclick="window.open('http://www.facebook.com')">Síguenos<img id="iconfb" src="img/facebook.png"></button>
 	</div>
     <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
 </div>
@@ -82,13 +81,19 @@
 <!-- CABECERA LOGIN -->
 
 	<div id="cabecera" class="cabecera">
-        	<p id="txtCabLog">Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!</p>  
+<div id="subcabecera" class="cabecera2">
+    	<p id="txtCabLog">Inicia sesión con tu cuenta de Facebook para poder crear puzzles!!</p> 
+    	<div id="logData">
+        	 <p id="alias"> </p> 
             <img id="foto"/> 
-            <button id="fbButton" >Logout</button>
+       </div>     
+            <button id="fbLogin" class="facebook" onclick="iniciar();"></button>
+            <button id="fbLogout" class="logout" hidden="true" onclick="FB.logout();">Logout</button>
           <!-- <div class="loginButton">
             	<fb:login-button  show-faces="false" size="xlarge" autologoutlink="true" ></fb:login-button>
 
         	</div> -->
+</div>
         </div>
         
         
@@ -118,10 +123,11 @@
 					colaborar con tus piezas, puzzles o aportaciones.</p>
 
 		</div>
-        
-        <a href="https://docs.google.com/file/d/0BxDC8Ovy8KxvX3V1Nzh0dEFzUVU/edit?usp=sharing " target="_blank" >Funcionamiento de Puzzlink</a>
+<div id="enlace">
+<div id="infoPic">i</div>        
+        <a id="info" href="https://docs.google.com/file/d/0BxDC8Ovy8KxvX3V1Nzh0dEFzUVU/edit?usp=sharing " target="_blank" >Funcionamiento de Puzzlink</a>
 	</div>
-
+</div>
 
 
 
@@ -142,8 +148,8 @@
          <!-- UNICA PIEZA -->
         
         <div id="pieza">
-           <a id="btnRight"  onclick="srchNext(true)">&rtrif;</a>
-          	<a id="btnLeft"  onclick="srchNext(false)">&rtrif;</a>
+           <a id="btnRight"  onclick="searchNextPiece(true)">&rtrif;</a>
+          	<a id="btnLeft"  onclick="searchNextPiece(false)">&rtrif;</a>
         
    
        
@@ -153,7 +159,7 @@
             
          		<div id="newPieza"> 
 					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="10" placeholder="Introduce aquí el contenido de tu pieza..." onclick="this.value=''"> </textarea>
-					<button id="btnGuardar" onclick="uploadPieza()" class="btn">Guardar</button>
+					<button id="btnGuardar" onclick="uploadPiece()" class="btn">Guardar</button>
 				</div>  
         	</div>
             <div id="puzzlePieza">
@@ -186,7 +192,12 @@
 
      		<div class="formAlta">
     			Nombre <input id="puzzleName" type="text" placeholder="Nombre..."/>
-    		  
+    		  	Elige un grupo o crea uno nuevo 
+												<select id="comboGrupos"name="Grupos" >
+  														<option>one</option>
+  														<option>two</option>
+  														<option>three</option>
+												</select> 
         	</div>
   
         
@@ -234,7 +245,7 @@
     <div id="cUsuarios" class="scroll">
 	
      
-        <p class="txtGrupos">En esta zona están los usuarios que han creado puzzles, pulsa sobre ellos para ver el detalle de las piezas. </p>
+        <p class="txtGrupos">Estos son los usuarios que han creado puzzles, pulsa sobre ellos para ver sus puzzles. </p>
     
      	<div id="usuarios"></div>
  
@@ -249,10 +260,10 @@
  <!-- PIE PAGINA-->  
     <div id="pie">    
         <div id="piePiezas">
-        	<button class="btn" onclick="showPopup(true);">Buscar piezas por n&uacute;mero</button>
-        	<button class="btn" onclick="showPopup(false);">Buscar piezas por t&eacute;rminos</button>
-			<button class="btn" onclick="newPieza();">Subir una pieza nueva</button>
-        	<button class="btn" onclick="aleatoria();">Pieza aleatoria</button>
+        	<button class="btn" onclick="showPopup(true);">Buscar por n&uacute;mero</button>
+        	<button class="btn" onclick="showPopup(false);">Buscar por palabras</button>
+			<button id="np" class="btn" onclick="mostrarNewPieza();">Pieza nueva</button>
+        	<button class="btn" onclick="showRandom();">Pieza aleatoria</button>
         </div>
         
         <div id="pieGrupo">
