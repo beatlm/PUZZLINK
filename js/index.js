@@ -1,7 +1,7 @@
 //prueba
 var altaOk="Enhorabuena, se ha dado de alta su pieza con ID: ";
 var altaKo="No se ha podido dar de alta la pieza, por favor vuelve a intentarlo.";
-var aliasKo="No tienes establecido un alias en facebook. Accede a facebook.com/username para elegir uno. En caso contrario usaremos tu ID numÃƒÂ©rico.";
+var aliasKo="No tienes establecido un alias en facebook. Accede a facebook.com/username para elegir uno. En caso contrario usaremos tu ID numérico.";
 var inicioSesion="Inicia sesi&oacute;n con tu cuenta de Facebook para poder crear puzzles!!";
 
 $(document).ready(function(){ 
@@ -61,7 +61,8 @@ function mostrar(id){
 	 	$("#menu1").addClass( "selected" );
 		$("#btnLrft").hide();
 		$("#puzzlePieza").hide();
-		showPieces(searchPieces(1),false);
+		puzzleOut();
+		showPieces(searchPieces(1));
 		break;
 	case (2)://PUZZLINKERS		
 		$("#menu2").addClass( "selected" );	
@@ -73,7 +74,8 @@ function mostrar(id){
 		$("#puzzles").show();
 		
 		$("#menu3").addClass( "selected" );
-		showPuzzles( getPuzzlesByUser( localStorage.uid),true,localStorage.name);//Se muestran los puzzles del usuario logado
+		puzzleOut();
+		showPuzzles( getPuzzlesByUser(true),true,localStorage.name,false);//Se muestran los puzzles del usuario logado
 		break;
 	case(4)://GRUPOS
 		showGrupos(getGroups(),false);
@@ -108,8 +110,9 @@ function mostrar(id){
 	 	$("#menu1").addClass( "selected" );
 		$("#btnLrft").hide();
 		$("#puzzlePieza").show();
-		$("#btnAddPieza").text("AÃƒÂ±adir pieza al puzzle "+localStorage.puzzle);	
-		searchPieces(1);//Buscamos la primera pieza
+		$("#btnAddPieza").text("Añadir pieza al puzzle "+localStorage.puzzle);	
+	//	addPiecesPuzzle(1);//Buscamos la primera pieza
+		showPieces(searchPieces(1));
 		break;
 	}
 }
@@ -135,14 +138,14 @@ function searchNextPiece(next){
 	}else{
 		final=Number(final)-Number(1);
 	}
-	showPieces(searchPieces(final),false);
+	showPieces(searchPieces(final));
  }
 
 //Funcion que muestra una pieza aleatoria de entre las existentes
 function showRandom(){	
 	var last=getLastPiece();
 	var num=Math.floor(Math.random()*last)+1;
-	showPieces(searchPieces(num),false);													
+	showPieces(searchPieces(num));													
 }
  
  /* Funcion que devuelve el id de la ultima pieza en BBDD*/
@@ -183,74 +186,136 @@ function searchPieces(num){
 
 
 
+/*  Funcion que muestra las piezas de un puzzle */
+function showPiecesPuzzle(puzzle, grupo, piezas, owner){
+	//alert("showPiecesPuzzle  "+puzzle+" grupo "+grupo+ "piezas"+piezas.length+" owner "+owner);
+	localStorage.grupo=grupo;
+	localStorage.owner=owner;
+		if(piezas.length==0){//No hay piezas en el puzzle
+			$("#txtIntro").text("El puzzle aún no tiene piezas, añádelas!.");
+		}else {
+			$('#cPuzzles').hide();
+			$('#cPiezas').show();
+			$('#btnLeft').hide();
+			$('#btnRight').hide();
+			$('#puzzlePieza').hide();
+			$("#piePuzzles").show();
+			$('#pieAnadePiezas').show(); 
+	 		$('#piezas').show(); 
+	  		$("#txtIntro").text("Estas son las piezas del puzzle seleccionado.");
+	  		$("#variasPiezas").show();
+			$("#pie").show();
+			$('#pieza').hide();
+ 
+		$("#cabPuzzle").text("PUZZLE: "+localStorage.puzzle+"	         GRUPO: "+localStorage.grupo);
+	 
+		 //Limpiamos las piezas anteriores
+		
+		for(var i=0;i<piezas.length;i++){
+		  	var texto="<div  class='introTxt'> <p >"+piezas[i].id+"- "+piezas[i].texto +"</p>";
+	 		$('#piezas').append(texto);
+		} 
+			
+		}
+}
+
+/*function addPiecesPuzzle(num){
+	//alert("addPiecesPuzzle  "+localStorage.puzzle+" grupo "+localStorage.grupo+ " owner "+localStorage.owner);
+ showPieces(searchPieces(num));
+		$("#cabeceraPuzzle").show();
+		$("#cabPuzzle").text("PUZZLE: "+localStorage.puzzle+"	      GRUPO: "+localStorage.grupo);
+		$("#puzzlePieza").show();
+	
+}*/
+
 /* Funcion que pasandole el json con las piezas obtenidas, las muestra por pantalla 
 piezas-->Piezas a mostrar
 propietary=true-->El usuario es propietario del puzzle por lo que puede añadir piezas*/
-function showPieces(piezas,propietary){
-	alert(" piezas "+piezas+" propietary "+propietary);
+function showPieces(piezas){
+	//alert("showPieces "+piezas.length);
+	//Limpiamos datos
+	$("#buscarID").val("");//Se limpia el campo de busqueda por numero
+	$("#buscarTerm").val("");//Se limpia el campo de busqueda por palabra
+
+	$("#fondo").hide();
+	$("#buscar").hide();
+	$('#piezas').empty();
+	$("#pieza").hide();
+	$("#contentPieza").hide();
+	$("#variasPiezas").hide();
+	$("#newPieza").hide();	  
+	$("#piePuzzles").hide();
+	$("#puzzlePieza").hide();
+	$("#cabeceraPuzzle").hide();
+		
 	desmarcar();
-	//Marcamos la opcion puzzles
+	//Marcamos la opcion piezas
 	$("#menu1").addClass( "selected" );
 	$("#btnRight").show();
 	$("#btnLeft").show();
 	$('#cPuzzles').hide();
 	$('#cPiezas').show();
 		
-	if(localStorage.pieza==1){
-		$("#btnLeft").hide();//Si es la primera no mostramos flecha izda
+		
+	if(piezas.length>0){
+		if(piezas[0].id==1){
+			$("#btnLeft").hide();//Si es la primera no mostramos flecha izda
+		}
+		var last= getLastPiece();
+		if(Number(last)==Number(piezas[0].id)){
+			$("#btnRight").hide();//Si es la ultima no mostramos flecha dcha
+		}
 	}
-	var last= getLastPiece();
-	if(Number(last)==Number(localStorage.pieza)){
-		$("#btnRight").hide();//Si es la ultima no mostramos flecha dcha
-	}
-	$("#buscarID").val("");//Se limpia el campo de busqueda por numero
-	$("#buscarTerm").val("");//Se limpia el campo de busqueda por palabra
-
-	$("#fondo").hide();
-	$("#buscar").hide();
 	
-	if (piezas.length <= 0 && propietary==false){//Sin piezas
-		alert("1");
-		$("#txtIntro").text("No se han encontrado piezas con esos criterios, o ese puzzle aun no contiene piezas.");
-		  //Limpiamos las piezas anteriores
-		$('#piezas').empty();
-		$("#pieza").hide();
-		$("#contentPieza").hide();
 
-      }else if(piezas.length<=0 && propietary==true){
-	  alert("2");
-	  	$("#txtIntro").text("El puzzle "+name+" aún no tiene piezas, añádelas!.");
 	
-	//$("#variasPiezas").show();
-	$("#pieza").hide();
-	$("#contentPieza").hide();
-	$("#btnLeft").hide();
-	$("#btnRight").hide();
-	$("#pieAnadePiezas").show();
-	$("#piePuzzles").show();
+	
+	if (piezas.length == 0 ){//Sin piezas
+		showPopupAceptar("No se han encontrado piezas con esos criterios.");		 
+		
+	 	piezas=searchPieces(1);
+			$("#contentPieza").text(piezas[0].id+"- "+piezas[0].texto);
+			$("#pie").show();
+			$("#pieza").show();
+			$("#contentPieza").show();
+			$("#btnLeft").hide();
+			$("#pieAnadePiezas").show();
+			$('#piePiezas').show();  	
 	  
-}else if(piezas.length==1){//Unica pieza sin añadir a puzzle
-	alert("3");
+	}else if(piezas.length==1){//Unica pieza 
+		//alert("3");
+	 
         $("#txtIntro").text("Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función 'Buscar' es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.");
-		$("#variasPiezas").hide();	  
+	 
+		$('#pie').show();
+		$("#contentPieza").text(piezas[0].id+"- "+piezas[0].texto);
 		$("#pieza").show();
 		$("#contentPieza").show();
-	  	$("#newPieza").hide();
-		$("#contentPieza").text(piezas[0].id+"- "+piezas[0].texto);
-	  }else{//Se encuentran varias piezas
-	  alert("4");
-	  	$("#txtIntro").text("Hay varias piezas con esos criterios, por favor haz click sobre la que te interese.");
-	  	$("#variasPiezas").show();
-	  	$("#pieza").hide();
-	  	$("#contentPieza").hide();
-	
+		$('#piePiezas').show();
+		
+		
+	}else{//Varias piezas
+		  $("#txtIntro").text("Hay varias piezas con ese criterio.");
+		  
+		  	$("#variasPiezas").show();
+			$("#pie").show();
+		 
+			$("#pieAnadePiezas").show();
 		 //Limpiamos las piezas anteriores
-		$('#piezas').empty();
+		
 		for(var i=0;i<piezas.length;i++){
-		  	var texto="<div  class='introTxt' onclick='quitarshowPieces(searchPieces("+piezas[i].id+"))'> <p >"+piezas[i].id+"- "+piezas[i].texto +"</p>";
+		  	var texto="<div  class='introTxt'> <p >"+piezas[i].id+"- "+piezas[i].texto +"</p>";
 	 		$('#piezas').append(texto);
-		} 
-	  }
+		} 	
+	}
+	
+	//Si hay seleccionado un puzzle, mostramos la cabecera y el boton añadir piezas.
+	if(localStorage.puzzle!='false'){
+		$("#cabeceraPuzzle").show();
+		$("#cabPuzzle").text("PUZZLE: "+localStorage.puzzle+"	      GRUPO: "+localStorage.grupo);
+		$("#puzzlePieza").show();
+		}
+	
 }
 
 
@@ -297,29 +362,7 @@ function searchPuzzlePiece(num,name){
 					async:false}).responseText;
 	var result = JSON.parse(r);
 	
-	return result;
-//	showPieces(result);
-	
-	
-	/*$("#puzzles").hide();
-	$("#cPiezas").show();
-	if(result.length>0){		
-		$("#txtPuzzles").text("Estas son las piezas del puzzle "+name);
-	}else{
-		$("#txtPuzzles").text("El puzzle "+name+" aÃƒÂºn no tiene piezas, aÃƒÂ±ÃƒÂ¡delas!.");
-	}
-	$("#variasPiezas").show();
-	$("#pieza").hide();
-	$("#contentPieza").hide();
-	$("#btnLeft").hide();
-	$("#btnRight").hide();
-	$("#pieAnadePiezas").show();
-	//Limpiamos las piezas anteriores
-	$('#piezas').empty();
-	for(var i=0;i<result.length;i++){
-		var texto="<div class='introTxt'> <p class='puzzleName' >"+result[i].texto+"</p>";
-		$('#piezas').append(texto);
-	}	*/														
+	return result;										
 }
 
   /************************** POPUPS *********************/
@@ -330,7 +373,7 @@ function showPopup(num){
 	$("#fondo").show();
 	$("#buscar").show();
 	if(num){
-		$("#textoPopup").text("Introduce el n&uacute;mero de pieza");
+		$("#textoPopup").text("Introduce el número de la pieza");
 		$("#buscarID").show();
 		$("#buscarTerm").hide();
 	}else{
@@ -381,7 +424,7 @@ function errorAlta(){
 
     // Here we specify what we do with the response anytime this event occurs. 
     if (response.status === 'connected') {
-   
+  
 
 		localStorage.uid = response.authResponse.userID
 		
@@ -389,19 +432,22 @@ function errorAlta(){
 
 			if(typeof response.username == "undefined"  ){//Si no tiene username definido, utuliazaremos el id para obtener la foto y mostraremos el nombre?? y le avisaremos de poder establecer un username en facebook facebook.com/username.
 				localStorage.name = localStorage.uid;
+			 
 				showPopupAceptar(aliasKo);
-			 	//alert("https://graph.facebook.com/"+localStorage.uid+"/picture");
+			 	////alert("https://graph.facebook.com/"+localStorage.uid+"/picture");
 				$("#foto").attr("src","https://graph.facebook.com/"+localStorage.uid+"/picture");
-				$("#alias").text( "Bienvenid@ "+localStorage.uid);	 
+				$("#alias").text( "Bienvenid@ "+localStorage.uid);	
+				checkUser(); 
 			}else{
+				 
 			 	localStorage.name = response.username;
 				$("#foto").attr("src","https://graph.facebook.com/"+response.username+"/picture");
-				$("#alias").text("Bienvenid@ "+ response.username);	 
+				$("#alias").text("Bienvenid@ "+ response.username);	
+				checkUser(); 
 			}
 	 
 		});
 	
-	checkUser();
 	
 	$("#fbLogin").hide();
 	$("#fbLogout").show();
@@ -413,14 +459,16 @@ function errorAlta(){
     } else if (response.status === 'not_authorized') {
 	  	showPopupAceptar("Los datos no son correctos, vuelve a intentarlo");
       	FB.login();
-	  	localStorage.uid=false;localStorage.name=false;
+	  	localStorage.uid=false;
+		localStorage.name=false;
 	  	mostrar(0);
 	   	$("#txtCabLog").text(inicioSesion);
     } else {
 
 	   $("#txtCabLog").show();
 	    mostrar(0);
-	    localStorage.uid=false;localStorage.name=false;
+	    localStorage.uid=false;
+		localStorage.name=false;
 	
 		$("#foto").attr("src","url('img/Transparent.gif')");		
 		$("#fbLogin").show();
@@ -435,7 +483,8 @@ function errorAlta(){
 
 // Funcion que da de alta un  usuario en BBDD, FALTA comprobar si no tiene alias y actualizarlo
 function checkUser(){
-// alert(localStorage.name+"-"+localStorage.uid);
+	////alert("alias "+localStorage.name+" id "+localStorage.uid);
+ 
   var r=$.ajax({data:{"alias":localStorage.name,
 					"id":localStorage.uid}, 
 	                url:'php/alias.php', 
@@ -446,7 +495,7 @@ function checkUser(){
   
  function iniciar(){
 	 FB.login();
-	checkUser();						 
+	//NcheckUser();						 
 } 
 
   // Load the SDK asynchronously
@@ -464,9 +513,10 @@ function cargaFb(d){
  
  /* Funcion que obtiene todos los puzzles de un usuario */
  function getPuzzlesByUser(id){
-
- if(!id){//Si uid es true--Se buscan los del usuario logado	
+//alert("getpuzzlesbyuser "+id);
+ if(id==true){//Si uid es true-->Se buscan los del usuario logado	
 	var uid=localStorage.uid;
+	//alert("logado "+localStorage.uid);
  }else{
 	var uid=id;
  }
@@ -479,36 +529,48 @@ function cargaFb(d){
  
  /*  Funcion que muestra los puzles pasados por parametros 
  result -- Json con los puzzles a mostrar, user=true si son los del usuario logado*/
-function showPuzzles(result,user,name) {
+function showPuzzles(result,user,name,grupo) {
 	
 	desmarcar();
-		$("#menu3").addClass( "selected" );
-	
+	$("#menu3").addClass( "selected" );
 	$("#pieAnadePiezas").hide();	
 	$('#puzzles').empty();//Limpiamos los puzzles anteriores
-	 
+	$("#pieGrupo").hide();
+	$("#cGrupos").hide();
+	
 	if(result.length==0){
 
 		if(user && localStorage.uid=="false"){//Se buscan los puzzles del usuario logado
-		$("#txtPuzzles").text("Conéctate con tu cuenta de Facebook para poder crear y ver tus 		puzzles.");
+			$("#txtPuzzles").text("Conéctate con tu cuenta de Facebook para poder crear y ver tus 		puzzles.");
+		}else{
+			$("#pie").show();
+			$("#piePuzzles").show();
+			$("#txtPuzzles").text("No has creado ningun puzzle."); 
+		}
 	}else{
-		$("#pie").show();
-	$("#piePuzzles").show();
-		$("#txtPuzzles").text("No has creado ningun puzzle."); 
-	}
+	//alert("grupo "+grupo);
+	//Mostramos los puzzles de un grupo
+	if(grupo!=false){
+	$("#txtPuzzles").text("Puzzles del grupo "+grupo);
 	}else{
+	//alert("name "+name);
 		$("#txtPuzzles").text("Puzzles de "+name);
+		}
 	 	for(var i=0;i<result.length;i++){
-				var propietary=(name==localStorage.name);
+				//var propietary=(name==localStorage.name);
 			 
-			console.log( result[i].nombre+' propietary '+propietary);
+			console.log( result[i].nombre+' propietary '+result[i].userID);
 		
-			var texto="<div class='caja' onclick='showPieces(searchPuzzlePiece("+result[i].id+",&quot;"+result[i].nombre+"&quot;),"+propietary+");'> <p class='puzzleName' >"+result[i].nombre+"</p>";
+			var texto="<div class='caja' onclick='showPiecesPuzzle(&quot;"+result[i].nombre+"&quot;,&quot;"+result[i].grupo+"&quot;,searchPuzzlePiece("+result[i].id+",&quot;"+result[i].nombre+"&quot;),&quot;"+result[i].userID+"&quot;);'> <p class='puzzleName' >"+result[i].nombre+"</p>";
 			$('#puzzles').append(texto);
 			}
 		$('#listaPuzzles').show();  
 		$('#cUsuarios').hide();
 		$('#cPuzzles').show();
+		if(localStorage.uid!="false"){
+				$("#pie").show();
+	$("#piePuzzles").show();
+		}
  
 	 } 
 	
@@ -521,8 +583,9 @@ function showPuzzles(result,user,name) {
 	if($("#puzzleName").val().length==0){
 		showPopupAceptar("Por favor introduce un nombre para el nuevo puzzle");  
 	}else{
-		//alert("localStorage.uid nuevo puzzle "+localStorage.uid);
-		var r=$.ajax({data:{"nombre":$('#puzzleName').val(),"usuario":localStorage.uid},
+		//alert("Grupo sel "+$('select[name=Grupos]').val());
+		//////alert("localStorage.uid nuevo puzzle "+localStorage.uid);
+		var r=$.ajax({data:{"nombre":$('#puzzleName').val(),"usuario":localStorage.uid,"grupo":$('select[name=Grupos]').val()},
 						url:'php/newPuzzle.php', 
 						type:"POST",
 						async:false}).responseText;
@@ -537,8 +600,42 @@ function showPuzzles(result,user,name) {
 	}  
 }  
   
- 
+  
+function anadirPiezaPuzzle(){
+	//Comprobamos si es el propietario del puzzle 
+	
+	
+	
+	if(localStorage.owner!=localStorage.uid){
+		showPopupAceptar("Tienes que logarte y ser el dueño del puzzle para poder añadir piezas.");
+		
+	}else{
+	
+	
+	////alert(localStorage.puzzleID+"-"+localStorage.pieza);
+	var r=	$.ajax({data:{"puzzle":  localStorage.puzzleID,"pieza":localStorage.pieza},      
+	                url:'php/newPiezaPuzzle.php', 
+					type:"POST", async:false
+					}).responseText;							 
+	var result = JSON.parse(r);	
+	//alert(result[0].insert);
+	if(result[0].insert==0){
+		showPopupAceptar("No se ha añadido la pieza correctamente, intentalo de nuevo.");
+	}else{
+showPopupAceptar("Se ha añadido la pieza correctamente.");
+	}
+	
+	}
+}
+function puzzleOut(){
+localStorage.puzzle=false;
+localStorage.owner=false;
+localStorage.grupo=false;
+	$("#cabeceraPuzzle").hide();
+		$("#puzzlePieza").hide();
+	
 
+}
 
 //Busca un puzzle que pertenece a un userID
 /*function searchPuzzleByUser(userID,name){ 
@@ -569,13 +666,13 @@ showPuzzles( getPuzzlesByUser(userID),false);
 }
   
 function anadirPiezaPuzzle(){
-	alert(localStorage.puzzleID+"-"+localStorage.pieza);
+	//alert(localStorage.puzzleID+"-"+localStorage.pieza);
 	var r=	$.ajax({data:{"puzzle":  localStorage.puzzleID,"pieza":localStorage.pieza},      
 	                url:'php/newPiezaPuzzle.php', 
 					type:"POST", async:false
 					}).responseText;							 
 	var result = JSON.parse(r);	
-	alert(result);
+	//alert(result);
 showPopupAceptar("Se ha aÃƒÂ±adido la pieza correctamente.");*/
 	
 //}*/
@@ -601,13 +698,13 @@ showPopupAceptar("Se ha aÃƒÂ±adido la pieza correctamente.");*/
 	if(combo){
 		$('#comboGrupos').empty();
 		for(var i=0;i<result.length;i++){
-			var texto="<option>"+result[i].nombre+"</option>";
+			var texto="<option value="+result[i].id+">"+result[i].nombre+"</option>";
 	 		$('#comboGrupos').append(texto);
 		}		
 	}else{
 	 	$('#grupos').empty();
 		for(var i=0;i<result.length;i++){
-			var texto="<div  class='caja' onclick='srchGrupo("+result[i].id+")'> <p >"+result[i].nombre+"- "+result[i].descripcion +"</p>";
+			var texto="<div  class='caja' onclick='searchGrupo("+result[i].id+",&quot;"+result[i].nombre+"&quot;)'> <p >"+result[i].nombre+"- "+result[i].descripcion +"</p>";
 	 		$('#grupos').append(texto);
 		}
 	}
@@ -633,6 +730,16 @@ showPopupAceptar("Se ha aÃƒÂ±adido la pieza correctamente.");*/
 	}	  
   }
   
+  function searchGrupo(id,name){
+	  	var r=	$.ajax({data:{"id":  id},      
+						url:'php/getPuzzlesByGroup.php', 
+						type:"POST", async:false}).responseText;						
+	var result = JSON.parse(r);	
+ 
+	
+	showPuzzles(result,false,false,name);
+  }
+  
   /************************** PUZZLINKERS *********************/
   function getUsers(){
   var r=$.ajax({
@@ -648,7 +755,7 @@ showPopupAceptar("Se ha aÃƒÂ±adido la pieza correctamente.");*/
 	
 	$('#usuarios').empty();
 	for(var i=0;i<result.length;i++){
-		var texto="<div  class='caja' onclick='showPuzzles(getPuzzlesByUser("+result[i].user_id+"),false,\""+result[i].user_name+"\")'> <img class='icon' src='img/users.jpg' /><p >"+result[i].user_name+"</p></div>";
+		var texto="<div  class='caja' onclick='showPuzzles(getPuzzlesByUser("+result[i].user_id+"),false,\""+result[i].user_name+"\",false)'> <img class='icon' src='img/users.jpg' /><p >"+result[i].user_name+"</p></div>";
 	 	$('#usuarios').append(texto);
 	}  
   }

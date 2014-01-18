@@ -46,7 +46,7 @@
 	<p id="textoPopup" class="txtPopup">Introduce el número de la pieza</p>
 	<input id="buscarID" class="txtBuscar" maxlength="4" name="buscarID"   onclick="this.value=''"></input>
 	<input id="buscarTerm" class="txtBuscar" type="search"name="buscarID"  onclick="this.value=''"></input>
-	<button id="menuSearch" class="menu" onclick="showPieces(searchPieces($('#buscarID').val()));">Buscar</button>
+	<button id="menuSearch" class="menu" onclick="showPieces(searchPieces($('#buscarID').val()),false);">Buscar</button>
 </div>
 
 <!-- POPUP ALTA OK-->
@@ -107,13 +107,15 @@
 
 <!--Bienvenida -->
 	<div id="cMain">
-		<p class="cabecera">Esta página propone un juego en el que puede participar un solo jugador o millones de jugadores, en solitario
-            o de manera colectiva.
-            El tablero de juego es el cerebro de cada jugador, y las fichas cada una de las piezas numeradas accesibles en su correspondiente link.
-            No hay una meta definida que dictamine el final del Juego, sino un número potencialmente infinito de Metas. Por tanto, la duración de cada 			            partida la determina el propio jugador, sin penalizaciones de ningún tipo pero con una recompensa muy valiosa. Tampoco requiere de un lugar              específico de juego: cualquier espacio y momento puede ser adecuado. Solo se necesita un dispositivo de lectura o un ejemplar impreso del fichero    PuzzLink TM, que se encuentra disponible para descarga al pie de esta página.
-            Llevo más de 20 años jugando con él, aunque hasta 2012 no supe darle forma y nombre. Ahora sé cómo funciona, lo llamo PuzzLink, y me ha proporcionado muchas satisfacciones y placeres mentales. Su nombre nace de la contracción de los términos ingleses, Puzzle y Link, y describe la acción de ensamblar piezzas para reconstruir un puzzle, en contraposición al gerundio inglés puzzling, cuyo significado es confundir.
-            
-            PuzzLink consiste, básicamente, en considerar el contenido de varias piezas y encontrar relaciones inéditas entre los textos contenidos en ellas. El resultado suele ser -si se persevera- el descubrimiento de conceptos, datos y explicaciones muy reveladores.</p>
+		<p class="cabecera">
+		<span class="negrita">El Pensamiento Lineal</span> contempla y gestiona elementos incluidos en un mismo contexto para elaborar nuevas combinaciones entre esos elementos. En este sentido puede considerarse el contexto como un “puzzle” con las “piezas” ordenadas por acción del criterio predominante en el conjunto cerrado de ese contexto.
+		<br/><span class="negrita">El Pensamiento Asociativo</span>, en cambio, considera los elementos de varios contextos distintos para construir combinaciones inéditas que abren nuevos horizontes a la inteligencia. Este tipo de pensamiento contempla varios “puzzles” y extrae de ellos las piezas con las que puede elaborar un contexto distinto, pero que explica mejor la función que ejecuta cada uno de sus elementos (o piezas del puzzle) que la mera redisposición de los elementos de cada uno de los contextos, por separado.
+		<br/><span class="negrita">PuzzLink</span> es un conjunto aleatorio de elementos, pertenecientes a múltiples contextos, que permite elaborar nuevas ideas y nuevas explicaciones con su sola lectura, habituando al cerebro a elaborar nuevas percepciones, pautas y criterios con un conjunto de “piezas” siempre ampliable.
+		Un ejemplo sencillo de Pensamiento Asociativo es el término “Granja de datos”, que mezcla dos conceptos distintos y sin conexión aparente, extraídos de dos contextos igualmente inconexos: Ganadería y Estadística. “Granja de datos” aparece como un nuevo “puzzle”, un nuevo contexto, construido con dos elementos pertenecientes a dos disciplinas muy distintas.
+		La práctica habitual de  <span class="negrita">PuzzLink</span> genera nuevas conexiones entre neuronas e incluso nuevas neuronas (Neurogénesis), constituyendo un NeuroGimnasio para mantener un buen rendimiento intelectual e incluso aumentarlo.
+
+		
+		</p>
 		<p class="firma">Bienvenid@ a PuzzLink</p>
 		<div id="footer">
 				<p class="texto">A la izquierda tienes acceso a todos los
@@ -125,7 +127,7 @@
 		</div>
 <div id="enlace">
 <div id="infoPic">i</div>        
-        <a id="info" href="https://docs.google.com/file/d/0BxDC8Ovy8KxvX3V1Nzh0dEFzUVU/edit?usp=sharing " target="_blank" >Funcionamiento de Puzzlink</a>
+        <a id="info" href="https://docs.google.com/file/d/0BxDC8Ovy8KxvX3V1Nzh0dEFzUVU/edit?usp=sharing " target="_blank" >Cómo utilizar Puzzlink</a>
 	</div>
 </div>
 
@@ -134,7 +136,7 @@
 
 <!-------------------- CONTENIDO PIEZAS ----------------------->
 	<div id="cPiezas" class="scroll">
-	 
+	 <div id="cabeceraPuzzle" class="cabeceraPuzzle" ><p id="cabPuzzle"></p><button id="salirPuzzle" onclick="puzzleOut();">Salir del puzzle</button></div>
         <p id="txtIntro" class="txtGrupos">Una pieza PuzzLink mínima contiene Sujeto, Verbo y Predicado: tres nexos como mínimo y un máximo de 3.000 caracteres, con espacios incluidos. Como la función "Buscar" es omnipotente, las piezas no contienen imágenes, pero si es necesario consultar alguna, pueden ser invocadas simultáneamente desde otros sites que la contengan.</p>
         
         

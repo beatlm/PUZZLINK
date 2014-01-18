@@ -8,13 +8,14 @@ define("DB_DATABASE", "u185194903_puzzlink");//Nombre de la base de datos reempl
 
 $nombre =$_POST['nombre'];
 $usuario =$_POST['usuario'];
+$grupo =$_POST['grupo'];
  
 $con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
         // selecting database
         mysql_select_db(DB_DATABASE);
         
         
- $result = mysql_query("INSERT INTO puzzles(nombre,userID) VALUES('$nombre','$usuario')");
+ $result = mysql_query("INSERT INTO puzzles(nombre,userID,grupoID) VALUES('$nombre','$usuario','$grupo')");
 
 
 	/*como el usuario debe ser unico cuenta el numero de ocurrencias con esos datos*/

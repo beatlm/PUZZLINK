@@ -11,7 +11,7 @@ $con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
         // selecting database
         mysql_select_db(DB_DATABASE);
         
-$result=mysql_query("SELECT  p.nombre,p.id FROM puzzles as p WHERE p.userID = '$id'" );
+$result=mysql_query("SELECT  p.nombre,p.id,p.userID,p.grupoID , g.nombre as grupo FROM puzzles as p , grupos as g WHERE p.grupoID=g.id and p.userID = '$id'" );
 // $result = mysql_query("INSERT INTO usuarios(username,passw,email) VALUES('$user', '$passw','$email')");
 
 	/*como el usuario debe ser unico cuenta el numero de ocurrencias con esos datos*/
