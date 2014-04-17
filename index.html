@@ -1,16 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php header('Content-type: text/html; charset=utf-8'); ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="shortcut icon" href="img/icon.jpg" type="image/jpg;/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css"/>
-
-<link rel="stylesheet" href="index.css" />
+<link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css" content="text/css; charset=UTF-8"/>
+<link rel="stylesheet" href="index.css" content="text/css; charset=UTF-8"/>
 <script src="js/jquery-1.8.3.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript">
 
- // Cargamos el script propio despues de la p√°gina para no retardarla
+ // Cargamos el script propio despues de la p·gina para no retardarla
  function downloadJSAtOnload() {
  var element = document.createElement("script");
  element.src = "js/index.js";
@@ -25,7 +27,7 @@
  else window.onload = downloadJSAtOnload;
 
 </script>
-<title>PUZZLINK</title>
+<title>Puzzlink - Generador de pensamiento asociativo</title>
 
 </head>
 
@@ -40,29 +42,20 @@
  <!-- FONDO GRIS PARA IMPEDIR ACCESO -->
 <div id="fondo" class="fondo" onclick="closePopup();"></div>
 
- <!-- POPUP DE B√öSQUEDA-->
+ <!-- POPUP DE B⁄SQUEDA-->
 <div id="buscar" class="popup">
 	<button id="cerrar" onclick="closePopup();">X</button>
-	<p id="textoPopup" class="txtPopup">Introduce el n√∫mero de la pieza</p>
-	<input id="buscarID" class="txtBuscar" maxlength="4" name="buscarID"   onclick="this.value=''"></input>
-	<input id="buscarTerm" class="txtBuscar" type="search"name="buscarID"  onclick="this.value=''"></input>
-	<button id="menuSearch" class="menu" onclick="showPieces(searchPieces($('#buscarID').val()),false);">Buscar</button>
+	<p id="textoPopup" class="txtPopup">Introduce el n˙mero de la pieza</p>
+	<input id="buscarID" inputmode="latin" class="txtBuscar" maxlength="4" name="buscarID"   onclick="this.value=''"></input>
+	<input id="buscarTerm" inputmode="latin" class="txtBuscar" type="search" name="buscarID"  onclick="this.value=''"></input>
+	<button id="menuSearch" inputmode="latin" class="btnPopup" onclick="comprobarVacio($('#buscarID').val());">Buscar</button>
 </div>
 
 <!-- POPUP ALTA OK-->
 <div id="popupAceptar" class="popup">
-	<p id="txtAceptar" class="texto"></p>
-	<button id="menuSearch" class="menu" onclick="closePopup();">Aceptar</button>
+	<p id="txtAceptar" class="txtPopup"></p>
+	<button id="menuSearch" class="btnPopup" onclick="closePopup();">Aceptar</button>
 </div>
-
- <!-- POPUP DE ALIAS-->
-<!--<div id="popupAlias" class="popup">
-	<button id="cerrar" onclick="closePopup();">X</button>
-	<p class="txtPopup">Introduce tu alias para Puzzlink</p>
-	<input id="aliasInput" class="txtBuscar" type="text" name="buscarID" onclick="this.value=''"></input>
-	<button id="aliasButton" class="menu" onclick="setAlias($('#aliasInput').val());">Aceptar</button>
-</div>-->
-
 
  <!-- MENU -->
 <div id="menu"  class="menu">
@@ -73,28 +66,27 @@
 			<button id="menu2" class="menu" onclick="mostrar(2);" >Puzzlinkers</button>
 			<button id="menu3" class="menu" onclick="mostrar(3);">Puzzles </button>
 			<button id="menu4" class="menu" onclick="mostrar(4);">Grupos</button>
-			<button id="menu5" class="menu" onclick="window.open('http://www.facebook.com')">S√≠guenos<img id="iconfb" src="img/facebook.png"></button>
+			<button id="menu5" class="menu" onclick="window.open('https://www.facebook.com/pages/Puzzlink-Spain/258397941002153?fref=ts')">S&iacute;guenos<img id="iconfb" alt="icono facebook"></button>
 	</div>
     <a id="mail" href="mailto:puzzlinkers@gmail.com">Puzzlinkers@gmail.com</a>  
 </div>
 
 <!-- CABECERA LOGIN -->
-
-	<div id="cabecera" class="cabecera">
-<div id="subcabecera" class="cabecera2">
-    	<p id="txtCabLog">Inicia sesi√≥n con tu cuenta de Facebook para poder crear puzzles!!</p> 
-    	<div id="logData">
-        	 <p id="alias"> </p> 
-            <img id="foto"/> 
-       </div>     
-            <button id="fbLogin" class="facebook" onclick="iniciar();"></button>
-            <button id="fbLogout" class="logout" hidden="true" onclick="FB.logout();">Logout</button>
-          <!-- <div class="loginButton">
-            	<fb:login-button  show-faces="false" size="xlarge" autologoutlink="true" ></fb:login-button>
-
-        	</div> -->
+<div id="cabecera" class="cabecera">
+	<!--<div id="subcabecera" class="cabecera2">-->
+   	 
+    	<div id="logout" class="logout" >
+        	<p id="alias"> </p> 
+            <img id="foto"  alt="foto perfil del usuario"/> 
+			<button id="fbLogout" class="logout"  onclick="FB.logout();">Logout</button>
+       </div>    
+		
+		<div  id="login" class="login" onclick="iniciar();" >
+			<img id="fbLogin"alt="icono facebook" class="facebook"/>	
+			<p id="txtCabLog">Entrar</p>	
+		</div>
+	<!--</div>-->
 </div>
-        </div>
         
         
 
@@ -102,33 +94,33 @@
 <div id="center" class="center">
 
 
-
-
-
 <!--Bienvenida -->
 	<div id="cMain">
-		<p class="cabecera">
-		<span class="negrita">El Pensamiento Lineal</span> contempla y gestiona elementos incluidos en un mismo contexto para elaborar nuevas combinaciones entre esos elementos. En este sentido puede considerarse el contexto como un ‚Äúpuzzle‚Äù con las ‚Äúpiezas‚Äù ordenadas por acci√≥n del criterio predominante en el conjunto cerrado de ese contexto.
-		<br/><span class="negrita">El Pensamiento Asociativo</span>, en cambio, considera los elementos de varios contextos distintos para construir combinaciones in√©ditas que abren nuevos horizontes a la inteligencia. Este tipo de pensamiento contempla varios ‚Äúpuzzles‚Äù y extrae de ellos las piezas con las que puede elaborar un contexto distinto, pero que explica mejor la funci√≥n que ejecuta cada uno de sus elementos (o piezas del puzzle) que la mera redisposici√≥n de los elementos de cada uno de los contextos, por separado.
-		<br/><span class="negrita">PuzzLink</span> es un conjunto aleatorio de elementos, pertenecientes a m√∫ltiples contextos, que permite elaborar nuevas ideas y nuevas explicaciones con su sola lectura, habituando al cerebro a elaborar nuevas percepciones, pautas y criterios con un conjunto de ‚Äúpiezas‚Äù siempre ampliable.
-		Un ejemplo sencillo de Pensamiento Asociativo es el t√©rmino ‚ÄúGranja de datos‚Äù, que mezcla dos conceptos distintos y sin conexi√≥n aparente, extra√≠dos de dos contextos igualmente inconexos: Ganader√≠a y Estad√≠stica. ‚ÄúGranja de datos‚Äù aparece como un nuevo ‚Äúpuzzle‚Äù, un nuevo contexto, construido con dos elementos pertenecientes a dos disciplinas muy distintas.
-		La pr√°ctica habitual de  <span class="negrita">PuzzLink</span> genera nuevas conexiones entre neuronas e incluso nuevas neuronas (Neurog√©nesis), constituyendo un NeuroGimnasio para mantener un buen rendimiento intelectual e incluso aumentarlo.
+    <div class="espacio">
+		<p class="cabecera negrita centro">	
+			øQuÈ puntos de contacto hay entre el fractal Koch y las antenas de los mÛviles?</br>
+			øQuÈ relaciÛn existe entre una campaÒa de vacunaciÛn y la tirada de un periÛdico?</br>
+			øQuÈ vÌnculos pueden establecerse entre una granja y una base de datos? </br>
+			øO entre el censo de inmigrantes, la IBM, el Holocausto y Google?</br>
+			Las respuestas las proporciona el Pensamiento Asociativo.</br>
 
-		
-		</p>
-		<p class="firma">Bienvenid@ a PuzzLink</p>
-		<div id="footer">
-				<p class="texto">A la izquierda tienes acceso a todos los
-					elementos necesarios para participar en la b√∫squeda de sentidos.
-					Puedes leer los puzzles ya resueltos, consultar las fichas
-					disponibles, ponerte en contacto con otros puzzlinkers e incluso
-					colaborar con tus piezas, puzzles o aportaciones.</p>
+			
+		</div>
+	
+		<div id="footer" class="espacio">
+				<p> El <span class="negrita">Pensamiento Asociativo</span> considera los elementos de varios contextos distintos para construir combinaciones inÈditas que abren nuevos horizontes al pensamiento.
+<span class="negrita">PuzzLink</span> es un Generador de Pensamiento Asociativo que considera la realidad como un conjunto de puzzles, cuyas piezas pueden intercambiarse para obtener o descubrir los mecanismos internos que configuran esa realidad.
+</p>
 
 		</div>
-<div id="enlace">
-<div id="infoPic">i</div>        
-        <a id="info" href="https://docs.google.com/file/d/0BxDC8Ovy8KxvX3V1Nzh0dEFzUVU/edit?usp=sharing " target="_blank" >C√≥mo utilizar Puzzlink</a>
-	</div>
+		<p class="centro">Bienvenid@s a PuzzLink</p>
+		
+<!--<div id="enlace"> 
+<div id="infoPic">i</div> -->  
+<p id="info">     
+        <a  id="info" href="https://drive.google.com/file/d/0BwxKYn_F_MKTQkRCbXQxekRRaFU/edit?usp=sharing " target="_blank" >Descarga <span class="subrayado">aquÌ</span> m·s informaciÛn sobre Puzzlink</a>
+		</p>
+	<!--</div>-->
 </div>
 
 
@@ -136,10 +128,12 @@
 
 <!-------------------- CONTENIDO PIEZAS ----------------------->
 	<div id="cPiezas" class="scroll">
-	 <div id="cabeceraPuzzle" class="cabeceraPuzzle" ><p id="cabPuzzle"></p><button id="salirPuzzle" onclick="puzzleOut();">Salir del puzzle</button></div>
-        <p id="txtIntro" class="txtGrupos">Una pieza PuzzLink m√≠nima contiene Sujeto, Verbo y Predicado: tres nexos como m√≠nimo y un m√°ximo de 3.000 caracteres, con espacios incluidos. Como la funci√≥n "Buscar" es omnipotente, las piezas no contienen im√°genes, pero si es necesario consultar alguna, pueden ser invocadas simult√°neamente desde otros sites que la contengan.</p>
-        
-        
+	<!-- <div id="cabeceraPuzzle" class="cabeceraPuzzle" ><p id="cabPuzzle"></p><button id="salirPuzzle" onclick="puzzleOut();">Salir del puzzle</button></div>-->
+     
+     <div class="cuadro">
+        <p id="txtIntro" class="txtGrupos">Una pieza PuzzLink mÌnima contiene Sujeto, Verbo y Predicado: tres nexos como mÌnimo y un m·ximo de 3.000 caracteres, con espacios incluidos. Como la funciÛn "Buscar" es omnipotente, las piezas no contienen im·genes, pero si es necesario consultar alguna, pueden ser invocadas simult·neamente desde otros sites que la contengan.</p>
+        <p id="variable2" class="variable"></>
+        </div>
          <!-- VARIAS PIEZAS -->
         <div id="variasPiezas">
         	<!--<p>Existen varias piezas con los criterios seleccionados, por favor haz click sobre la que te interese</p> -->
@@ -160,13 +154,14 @@
                 
             
          		<div id="newPieza"> 
-					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="10" placeholder="Introduce aqu√≠ el contenido de tu pieza..." onclick="this.value=''"> </textarea>
+				    <p class="txtGrupos">AÒade el texto para crear una pieza nueva. </p>
+					<textarea id="textoPieza" class="contentPieza" maxlength="3000" cols="30" rows="10" placeholder="Introduce aquÌ el contenido de tu pieza..." onclick="this.value=''"></textarea>
 					<button id="btnGuardar" onclick="uploadPiece()" class="btn">Guardar</button>
 				</div>  
         	</div>
             <div id="puzzlePieza">
                
-                <button id="btnAddPieza" class="btn" onclick="anadirPiezaPuzzle();">A√±adir esta pieza al puzzle</button>
+                <button id="btnAddPieza" class="btn" onclick="anadirPiezaPuzzle();">AÒadir esta pieza al puzzle</button>
             </div>
         </div>
         
@@ -181,29 +176,34 @@
     
          <!-- VARIAS PUZZLESS -->
         <div id="listaPuzzles" >
-        	<p id="txtPuzzles" class="txtGrupos"></p>
+        <div class="cuadro">
+        	<p id="txtPuzzles" class="txtGrupos"></p><p id="variable" class="variable" ><p>
+			
+            </div>
         	<div id="puzzles"></div>
         </div>
       
      </div>
         
        	<div id="cNewPuzzle">
-        	<p class="txtGrupos">A√±ade un nombre para el nuevo Puzzle. </p>
-    
- 
-
+		  <div class="cuadro">
+        	<p class="txtGrupos">AÒade un nombre para el nuevo Puzzle. </p> 
      		<div class="formAlta">
-    			Nombre <input id="puzzleName" type="text" placeholder="Nombre..."/>
-    		  	Elige un grupo o crea uno nuevo 
-												<select id="comboGrupos"name="Grupos" >
-  														<option>one</option>
-  														<option>two</option>
-  														<option>three</option>
-												</select> 
+				<label for="puzzleName">Nombre:</label>
+    			<input id="puzzleName" inputmode="latin" type="text" placeholder="Nombre..." class="inputForm"/>
+				<label for="comboGrupos">Elige un grupo o crea uno nuevo</label>	 
+				<select id="comboGrupos"name="Grupos" class="inputForm">
+  					<option>A˙n no se ha creado ning˙n grupo</option>
+				</select> 
         	</div>
-  
+		</div>
+		
+		
+	
+	
+	
         
-	</div> 
+		</div> 
         
         
         
@@ -213,10 +213,10 @@
 
 	<div id="cGrupos" class="scroll">
 	
-     
-        <p class="txtGrupos">En esta zona se organizan los Puzzles por temas, para una consulta m√°s precisa. 
-        <br>Puedes proponer nuevos Temas, si est√°s logado. </p>
-    
+          <div class="cuadro">
+        <p class="txtGrupos">En esta zona se organizan los Puzzles por temas, para una consulta m·s precisa. 
+        <br>Puedes proponer nuevos Temas, si est·s logado. </p>
+    </div>
      	<div id="grupos"></div>
  
     
@@ -224,16 +224,20 @@
     
     	<div id="cNewGrupo">
 	
-     
-        <p class="txtGrupos">A√±ade un nombre y descripci√≥n para el nuevo Grupo. </p>
-    
- 
+       <div class="cuadro">
+        <p class="txtGrupos">AÒade un nombre y descripciÛn para el nuevo Grupo. </p>
+	
 
      	<div class="formAlta">
-    		Nombre<input id="groupName" type="text" placeholder="Nombre..."/><br/>
-    		Descripci√≥n (max 20)<input id="groupDesc" type="text" placeholder="Descripcion..."</>      
+    		<label for="groupName">Nombre:</label>
+			<input inputmode="latin" id="groupName" type="text" class="inputForm" placeholder="Nombre..."/></br>
+			
+			<label for="groupDesc">DescripciÛn (max 20): </label>
+    		<input id="groupDesc" maxlength="20" inputmode="latin"  class="inputForm" type="text" placeholder="DescripciÛn..."/>     
+
+			 <button id="btnGroup" class="btn" onclick="newGroup();">Nuevo Grupo</button>
         </div>
-    
+    </div>
     
     
      
@@ -246,9 +250,9 @@
     <!------------------ PUZZLINKERS ------------->
     <div id="cUsuarios" class="scroll">
 	
-     
+     <div class="cuadro">
         <p class="txtGrupos">Estos son los usuarios que han creado puzzles, pulsa sobre ellos para ver sus puzzles. </p>
-    
+    </div>
      	<div id="usuarios"></div>
  
     
@@ -264,7 +268,7 @@
         <div id="piePiezas">
         	<button class="btn" onclick="showPopup(true);">Buscar por n&uacute;mero</button>
         	<button class="btn" onclick="showPopup(false);">Buscar por palabras</button>
-			<button id="np" class="btn" onclick="mostrarNewPieza();">Pieza nueva</button>
+			<button id="np" class="btn" onclick="showNewPiece();">Pieza nueva</button>
         	<button class="btn" onclick="showRandom();">Pieza aleatoria</button>
         </div>
         
@@ -275,10 +279,10 @@
        
        <div id="piePuzzles">
         	  <button class="btn" onclick="mostrar(8);">Nuevo Puzzle</button>
-              <button id="pieAnadePiezas" class="btn" onclick="mostrar(9);">A√±adir piezas</button> 
+              <button id="pieAnadePiezas" class="btn" onclick="mostrar(9);">AÒadir piezas</button> 
        </div> 
        <div id="pieNuevoGrupo">
-        	  <button class="btn" onclick="newGrupo();">Nuevo Grupo</button>
+        	  <!--<button class="btn" onclick="newGrupo();">Nuevo Grupo</button>-->
        </div> 
        <div id="pieNuevoPuzzle">
         	  <button class="btn" onclick="newPuzzle();">Crear Puzzle</button>
